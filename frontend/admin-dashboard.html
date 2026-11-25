@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Long Jump AI</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="js/auth.js"></script>
+
+    <style>
+        .admin-hero {
+            background: linear-gradient(135deg, rgba(14, 29, 49, 0.95), rgba(7, 17, 31, 0.98));
+            border: 1px solid rgba(56, 232, 165, 0.3);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .admin-hero h1 {
+            font-size: 28px;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .admin-hero h1 span {
+            color: var(--primary);
+        }
+
+        .admin-hero p {
+            color: var(--text-light);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .stats-grid-admin {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .admin-stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .admin-stat-card .stat-top {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-light);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .admin-stat-card h2 {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .admin-stat-card p {
+            font-size: 12px;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .admin-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+        }
+
+        .card-header-clean {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 14px;
+            margin-bottom: 18px;
+        }
+
+        .card-header-clean h3 {
+            font-size: 18px;
+            color: #fff;
+            margin: 0;
+        }
+
+        .sub-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .sub-table th {
+            text-align: left;
+            color: var(--text-light);
+            font-size: 11px;
+            text-transform: uppercase;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sub-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: var(--text);
+        }
+
+        .talent-bar-row {
+            margin-bottom: 18px;
+        }
+
+        .talent-bar-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .bar-track {
+            background: rgba(255,255,255,0.05);
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .bar-high { background: var(--primary); }
+        .bar-med { background: #3b82f6; }
+        .bar-dev { background: #f59e0b; }
+
+        .quick-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .quick-nav-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: all 0.2s;
+        }
+
+        .quick-nav-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .quick-nav-icon {
+            font-size: 24px;
+            background: rgba(56, 232, 165, 0.1);
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="logo">
+            <span>LONG JUMP</span>
+            <strong>AI</strong>
+            <span style="font-size: 11px; background: rgba(56, 232, 165, 0.2); color: var(--primary); padding: 2px 8px; border-radius: 10px; margin-left: 8px;">ADMIN</span>
+        </div>
+        <nav></nav>
+    </header>
+
+    <main class="dashboard-container">
+
+        <!-- Admin Welcome Banner -->
+        <section class="admin-hero">
+            <div>
+                <p class="tag">SPORTS TALENT IDENTIFICATION PLATFORM</p>
+                <h1>Admin <span>Management Center</span></h1>
+                <p>Real-time platform statistics, athlete assessments, and talent identification analytics.</p>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <a href="reports.html" class="primary-button">📊 Export Reports</a>
+                <a href="admin-tests.html" class="nav-button">⚙️ Manage Tests</a>
+            </div>
+        </section>
+
+        <!-- 8. Dashboard Statistics -->
+        <section class="stats-grid-admin">
+            <div class="admin-stat-card">
+                <div class="stat-top">
+                    <span>Total Athletes</span>
+                    <span>👤</span>
+                </div>
+                <h2 id="totalAthletesCount">--</h2>
+                <p>Registered across platform</p>
+            </div>
+
+            <div class="admin-stat-card">
+                <div class="stat-top">
+                    <span>Total Submissions</span>
+                    <span>📹</span>
+                </div>
+                <h2 id="totalSubmissionsCount">--</h2>
+                <p>Video jump attempts</p>
+            </div>
+
+            <div class="admin-stat-card">
+                <div class="stat-top">
+                    <span>Completed Assessments</span>
+                    <span>✅</span>
+                </div>
+                <h2 id="completedAssessmentsCount">--</h2>
+                <p style="color: var(--primary);">AI pose & ML analyzed</p>
+            </div>
+
+            <div class="admin-stat-card">
+                <div class="stat-top">
+                    <span>Failed Assessments</span>
+                    <span>⚠️</span>
+                </div>
+                <h2 id="failedAssessmentsCount" style="color: #fca5a5;">--</h2>
+                <p>Rejected or invalid videos</p>
+            </div>
+        </section>
+
+        <!-- Main Administration Grid -->
+        <section class="admin-grid">
+
+            <!-- Recent Submissions Table -->
+            <div class="admin-card">
+                <div class="card-header-clean">
+                    <h3>Recent Test Submissions</h3>
+                    <a href="admin-submissions.html" style="color: var(--primary); text-decoration: none; font-size: 13px;">View All →</a>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table class="sub-table">
+                        <thead>
+                            <tr>
+                                <th>Athlete</th>
+                                <th>Test Type</th>
+                                <th>Status</th>
+                                <th>Takeoff Angle</th>
+                                <th>Predicted Dist</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentSubmissionsBody">
+                            <tr><td colspan="6" style="text-align: center; color: var(--text-light);">Loading recent activity...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Platform Talent Distribution -->
+            <div class="admin-card">
+                <div class="card-header-clean">
+                    <h3>Talent Distribution</h3>
+                    <span style="font-size: 12px; color: var(--text-light);">AI Potential Tiers</span>
+                </div>
+
+                <div class="talent-bar-row">
+                    <div class="talent-bar-header">
+                        <span style="color: var(--primary);">★ High Potential</span>
+                        <strong id="talentHighCount">0</strong>
+                    </div>
+                    <div class="bar-track">
+                        <div class="bar-fill bar-high" id="barHigh" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="talent-bar-row">
+                    <div class="talent-bar-header">
+                        <span style="color: #60a5fa;">★ Medium Potential</span>
+                        <strong id="talentMedCount">0</strong>
+                    </div>
+                    <div class="bar-track">
+                        <div class="bar-fill bar-med" id="barMed" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="talent-bar-row">
+                    <div class="talent-bar-header">
+                        <span style="color: #f59e0b;">★ Developing Athletes</span>
+                        <strong id="talentDevCount">0</strong>
+                    </div>
+                    <div class="bar-track">
+                        <div class="bar-fill bar-dev" id="barDev" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px solid var(--border); text-align: center;">
+                    <a href="performance.html" class="nav-button" style="display: block; text-align: center; padding: 10px;">View Full Platform Analytics →</a>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Quick Administration Links -->
+        <h3 style="color: #fff; font-size: 18px; margin-bottom: 16px;">Quick Management Portals</h3>
+        <section class="quick-nav-grid">
+            <a href="athletes.html" class="quick-nav-card">
+                <div class="quick-nav-icon">👥</div>
+                <div>
+                    <strong>Manage Athletes</strong>
+                    <div style="font-size: 12px; color: var(--text-light);">Search, inspect & manage accounts</div>
+                </div>
+            </a>
+
+            <a href="admin-submissions.html" class="quick-nav-card">
+                <div class="quick-nav-icon">📹</div>
+                <div>
+                    <strong>View Submissions</strong>
+                    <div style="font-size: 12px; color: var(--text-light);">Video playback & AI inspection</div>
+                </div>
+            </a>
+
+            <a href="reports.html" class="quick-nav-card">
+                <div class="quick-nav-icon">📊</div>
+                <div>
+                    <strong>Generate Reports</strong>
+                    <div style="font-size: 12px; color: var(--text-light);">Export CSV & Printable Summaries</div>
+                </div>
+            </a>
+
+            <a href="admin-tests.html" class="quick-nav-card">
+                <div class="quick-nav-icon">📋</div>
+                <div>
+                    <strong>Tests & Instructions</strong>
+                    <div style="font-size: 12px; color: var(--text-light);">Configure tests & guidelines</div>
+                </div>
+            </a>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">LONG JUMP <strong>AI</strong></div>
+        <p>© 2026 Long Jump AI. All rights reserved.</p>
+    </footer>
+
+    <script src="js/admin-dashboard.js"></script>
+</body>
+</html>

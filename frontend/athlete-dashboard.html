@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athlete Dashboard | Long Jump AI</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="js/auth.js"></script>
+
+    <style>
+        .profile-badge-card {
+            background: linear-gradient(135deg, rgba(14, 29, 49, 0.95), rgba(7, 17, 31, 0.95));
+            border: 1px solid rgba(56, 232, 165, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .profile-badge-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .profile-avatar-large {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: rgba(56, 232, 165, 0.15);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .profile-info-block h2 {
+            font-size: 24px;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+
+        .profile-info-block p {
+            color: var(--text-light);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .profile-biometrics {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .biometric-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .biometric-pill strong {
+            color: var(--primary);
+            margin-left: 4px;
+        }
+
+        .feedback-banner {
+            background: rgba(56, 232, 165, 0.08);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 25px;
+        }
+
+        .feedback-banner h4 {
+            color: var(--primary);
+            margin-bottom: 6px;
+            font-size: 16px;
+        }
+
+        .feedback-banner ul {
+            margin-left: 20px;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .feedback-banner li {
+            margin-bottom: 6px;
+        }
+
+        .recent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-top: 15px;
+        }
+
+        .metric-mini-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .metric-mini-card span {
+            display: block;
+            font-size: 12px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .metric-mini-card strong {
+            font-size: 20px;
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="logo">
+            <span>LONG JUMP</span>
+            <strong>AI</strong>
+        </div>
+        <nav></nav>
+    </header>
+
+    <!-- Main Dashboard Container -->
+    <main class="dashboard-container">
+
+        <!-- Athlete Profile Header Card -->
+        <section class="profile-badge-card">
+            <div class="profile-badge-left">
+                <div class="profile-avatar-large" id="athAvatar">--</div>
+                <div class="profile-info-block">
+                    <h2 id="athFullName">Loading Athlete...</h2>
+                    <p id="athSubDetails">Sports Talent Profile</p>
+                </div>
+            </div>
+            <div class="profile-biometrics" id="athBiometrics">
+                <div class="biometric-pill">Age: <strong id="athAge">--</strong></div>
+                <div class="biometric-pill">Height: <strong id="athHeight">--</strong></div>
+                <div class="biometric-pill">Weight: <strong id="athWeight">--</strong></div>
+                <div class="biometric-pill">BMI: <strong id="athBMI">--</strong></div>
+                <div class="biometric-pill">Skill: <strong id="athSkill">--</strong></div>
+            </div>
+        </section>
+
+        <!-- Statistics Overview -->
+        <section class="dashboard-stats">
+            <div class="dashboard-stat-card">
+                <div class="stat-top">
+                    <span>Personal Best</span>
+                    <span class="stat-icon">🏆</span>
+                </div>
+                <h2 id="statBestJump">--</h2>
+                <p class="positive" id="statBestJumpSub">AI Prediction Benchmark</p>
+            </div>
+
+            <div class="dashboard-stat-card">
+                <div class="stat-top">
+                    <span>Takeoff Angle</span>
+                    <span class="stat-icon">↗</span>
+                </div>
+                <h2 id="statAvgAngle">--</h2>
+                <p class="positive" id="statAngleSub">Optimal range: 18° - 23°</p>
+            </div>
+
+            <div class="dashboard-stat-card">
+                <div class="stat-top">
+                    <span>Talent Level</span>
+                    <span class="stat-icon">★</span>
+                </div>
+                <h2 id="statTalentLevel" style="font-size: 24px;">--</h2>
+                <p id="statTalentSub">Assessment Tier</p>
+            </div>
+
+            <div class="dashboard-stat-card">
+                <div class="stat-top">
+                    <span>Completed Tests</span>
+                    <span class="stat-icon">📹</span>
+                </div>
+                <h2 id="statTotalSubmissions">--</h2>
+                <p class="positive">Video Assessments</p>
+            </div>
+        </section>
+
+        <!-- Coaching Recommendations Alert -->
+        <section class="feedback-banner" id="recommendationsSection">
+            <h4>💡 AI Performance Feedback & Recommendations</h4>
+            <p id="feedbackSummary" style="margin-bottom: 10px; color: var(--text-light); font-size: 14px;">Reviewing your recent jump biomechanics...</p>
+            <ul id="recommendationsList">
+                <li>Submit a video assessment to receive personalized technique adjustments.</li>
+            </ul>
+        </section>
+
+        <!-- Latest AI Assessment Card -->
+        <section class="dashboard-card" id="latestAssessmentCard">
+            <div class="card-title">
+                <div>
+                    <h3>Latest AI Assessment Results</h3>
+                    <p id="latestTestMeta">Extracted using MediaPipe pose kinematics</p>
+                </div>
+                <a href="history.html" class="nav-button" style="padding: 6px 14px; font-size: 12px;">Full History →</a>
+            </div>
+
+            <div class="recent-grid">
+                <div class="metric-mini-card">
+                    <span>Takeoff Angle</span>
+                    <strong id="metricTakeoffAngle">--</strong>
+                </div>
+                <div class="metric-mini-card">
+                    <span>Knee Angle</span>
+                    <strong id="metricKneeAngle">--</strong>
+                </div>
+                <div class="metric-mini-card">
+                    <span>Hip Angle</span>
+                    <strong id="metricHipAngle">--</strong>
+                </div>
+                <div class="metric-mini-card">
+                    <span>Flight Time</span>
+                    <strong id="metricFlightTime">--</strong>
+                </div>
+                <div class="metric-mini-card">
+                    <span>Landing Stability</span>
+                    <strong id="metricStability">--</strong>
+                </div>
+                <div class="metric-mini-card">
+                    <span>Predicted Distance</span>
+                    <strong id="metricDistance">--</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions Navigation -->
+        <section class="quick-actions" style="margin-top: 30px;">
+            <a href="video-analysis.html" class="quick-card">
+                <span class="quick-icon">📹</span>
+                <div>
+                    <h3>Upload Jump Video</h3>
+                    <p>Submit a new video for AI pose analysis</p>
+                </div>
+                <span>→</span>
+            </a>
+
+            <a href="prediction.html" class="quick-card">
+                <span class="quick-icon">⚡</span>
+                <div>
+                    <h3>AI Distance Predictor</h3>
+                    <p>Enter custom biometrics & test scores</p>
+                </div>
+                <span>→</span>
+            </a>
+
+            <a href="results.html" class="quick-card">
+                <span class="quick-icon">📊</span>
+                <div>
+                    <h3>Results Dashboard</h3>
+                    <p>Replay videos & view full records</p>
+                </div>
+                <span>→</span>
+            </a>
+
+            <a href="history.html" class="quick-card">
+                <span class="quick-icon">📋</span>
+                <div>
+                    <h3>Test History</h3>
+                    <p>View all past test attempts</p>
+                </div>
+                <span>→</span>
+            </a>
+
+            <a href="feedback.html" class="quick-card">
+                <span class="quick-icon">💬</span>
+                <div>
+                    <h3>Detailed Feedback</h3>
+                    <p>Technique insights & drills</p>
+                </div>
+                <span>→</span>
+            </a>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">LONG JUMP <strong>AI</strong></div>
+        <p>© 2026 Long Jump AI. All rights reserved.</p>
+    </footer>
+
+    <script src="js/athlete-dashboard.js"></script>
+</body>
+</html>

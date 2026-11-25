@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Reports | Long Jump AI</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/reports.css">
+    <script src="js/auth.js"></script>
+
+</head>
+
+<body>
+
+
+<header class="navbar">
+
+    <div class="logo">
+        <span>LONG JUMP</span>
+        <strong>AI</strong>
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="athlete.html">
+            Athlete
+        </a>
+
+        <a href="athletes.html">
+            Athletes
+        </a>
+
+        <a href="prediction.html">
+            Prediction
+        </a>
+
+        <a href="video-analysis.html">
+            Video Analysis
+        </a>
+
+    </nav>
+
+
+    <a href="dashboard.html"
+       class="nav-button">
+
+        Dashboard
+
+    </a>
+
+</header>
+
+
+
+<main class="reports-page">
+
+
+    <!-- Header -->
+
+    <section class="reports-header">
+
+        <div>
+
+            <p class="tag">
+                PERFORMANCE REPORTS
+            </p>
+
+            <h1>
+                Reports
+            </h1>
+
+            <p>
+                Review athlete analysis reports
+                and performance summaries.
+            </p>
+
+        </div>
+
+
+        <button
+            class="primary-button"
+            id="generateReport">
+
+            + Generate Report
+
+        </button>
+
+    </section>
+
+
+
+    <!-- Summary -->
+
+    <section class="report-summary">
+
+
+        <div class="report-summary-card">
+
+            <span>
+                Total Reports
+            </span>
+
+            <strong>
+                48
+            </strong>
+
+        </div>
+
+
+        <div class="report-summary-card">
+
+            <span>
+                This Month
+            </span>
+
+            <strong>
+                12
+            </strong>
+
+        </div>
+
+
+        <div class="report-summary-card">
+
+            <span>
+                Athletes Analyzed
+            </span>
+
+            <strong>
+                36
+            </strong>
+
+        </div>
+
+
+        <div class="report-summary-card">
+
+            <span>
+                Video Reports
+            </span>
+
+            <strong>
+                19
+            </strong>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- Reports Card -->
+
+    <section class="reports-card">
+
+
+        <!-- Toolbar -->
+
+        <div class="reports-toolbar">
+
+
+            <div class="report-search">
+
+                <span>
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    id="reportSearch"
+                    placeholder="Search reports..."
+                >
+
+            </div>
+
+
+            <select id="reportType">
+
+                <option value="all">
+                    All Reports
+                </option>
+
+                <option value="prediction">
+                    AI Prediction
+                </option>
+
+                <option value="video">
+                    Video Analysis
+                </option>
+
+                <option value="performance">
+                    Performance
+                </option>
+
+            </select>
+
+
+            <select id="reportSort">
+
+                <option value="latest">
+                    Latest
+                </option>
+
+                <option value="oldest">
+                    Oldest
+                </option>
+
+                <option value="name">
+                    Athlete Name
+                </option>
+
+            </select>
+
+
+        </div>
+
+
+
+        <!-- Report List -->
+
+        <div
+            class="report-list"
+            id="reportList">
+
+
+            <!-- Report 1 -->
+
+            <div
+                class="report-row"
+                data-name="arjun reddy"
+                data-type="prediction"
+            >
+
+                <div class="report-icon">
+                    AI
+                </div>
+
+
+                <div class="report-main">
+
+                    <strong>
+                        Arjun Reddy — AI Prediction
+                    </strong>
+
+                    <span>
+                        Predicted distance: 7.42 m
+                    </span>
+
+                </div>
+
+
+                <div class="report-type prediction-type">
+                    AI Prediction
+                </div>
+
+
+                <div class="report-date">
+                    Aug 26, 2026
+                </div>
+
+
+                <button
+                    class="report-action"
+                    onclick="openReport('Arjun Reddy')">
+
+                    View →
+
+                </button>
+
+            </div>
+
+
+
+            <!-- Report 2 -->
+
+            <div
+                class="report-row"
+                data-name="rahul kumar"
+                data-type="video"
+            >
+
+                <div class="report-icon video-icon">
+                    CV
+                </div>
+
+
+                <div class="report-main">
+
+                    <strong>
+                        Rahul Kumar — Video Analysis
+                    </strong>
+
+                    <span>
+                        Technique score: 81 / 100
+                    </span>
+
+                </div>
+
+
+                <div class="report-type video-type">
+                    Video Analysis
+                </div>
+
+
+                <div class="report-date">
+                    Aug 25, 2026
+                </div>
+
+
+                <button
+                    class="report-action"
+                    onclick="openReport('Rahul Kumar')">
+
+                    View →
+
+                </button>
+
+            </div>
+
+
+
+            <!-- Report 3 -->
+
+            <div
+                class="report-row"
+                data-name="vikram singh"
+                data-type="performance"
+            >
+
+                <div class="report-icon">
+                    PR
+                </div>
+
+
+                <div class="report-main">
+
+                    <strong>
+                        Vikram Singh — Performance
+                    </strong>
+
+                    <span>
+                        Best jump: 7.12 m
+                    </span>
+
+                </div>
+
+
+                <div class="report-type performance-type">
+                    Performance
+                </div>
+
+
+                <div class="report-date">
+                    Aug 23, 2026
+                </div>
+
+
+                <button
+                    class="report-action"
+                    onclick="openReport('Vikram Singh')">
+
+                    View →
+
+                </button>
+
+            </div>
+
+
+
+            <!-- Report 4 -->
+
+            <div
+                class="report-row"
+                data-name="neha sharma"
+                data-type="prediction"
+            >
+
+                <div class="report-icon">
+                    AI
+                </div>
+
+
+                <div class="report-main">
+
+                    <strong>
+                        Neha Sharma — AI Prediction
+                    </strong>
+
+                    <span>
+                        Predicted distance: 6.81 m
+                    </span>
+
+                </div>
+
+
+                <div class="report-type prediction-type">
+                    AI Prediction
+                </div>
+
+
+                <div class="report-date">
+                    Aug 21, 2026
+                </div>
+
+
+                <button
+                    class="report-action"
+                    onclick="openReport('Neha Sharma')">
+
+                    View →
+
+                </button>
+
+            </div>
+
+
+
+            <!-- Report 5 -->
+
+            <div
+                class="report-row"
+                data-name="rohan patel"
+                data-type="video"
+            >
+
+                <div class="report-icon video-icon">
+                    CV
+                </div>
+
+
+                <div class="report-main">
+
+                    <strong>
+                        Rohan Patel — Video Analysis
+                    </strong>
+
+                    <span>
+                        Technique score: 89 / 100
+                    </span>
+
+                </div>
+
+
+                <div class="report-type video-type">
+                    Video Analysis
+                </div>
+
+
+                <div class="report-date">
+                    Aug 19, 2026
+                </div>
+
+
+                <button
+                    class="report-action"
+                    onclick="openReport('Rohan Patel')">
+
+                    View →
+
+                </button>
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <!-- Empty -->
+
+        <div
+            class="report-empty"
+            id="reportEmpty">
+
+            <div>
+                🔍
+            </div>
+
+            <h3>
+                No reports found
+            </h3>
+
+            <p>
+                Try changing your search or filter.
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- Report Preview -->
+
+    <section
+        class="report-preview"
+        id="reportPreview">
+
+
+        <div class="preview-header">
+
+            <div>
+
+                <p class="tag">
+                    REPORT PREVIEW
+                </p>
+
+                <h2 id="previewTitle">
+                    Athlete Report
+                </h2>
+
+            </div>
+
+
+            <button
+                class="close-preview"
+                id="closePreview">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div class="preview-content">
+
+
+            <div class="preview-athlete">
+
+                <div class="preview-avatar">
+                    AR
+                </div>
+
+                <div>
+
+                    <span>
+                        ATHLETE
+                    </span>
+
+                    <h3 id="previewAthlete">
+                        Arjun Reddy
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="preview-metrics">
+
+
+                <div>
+
+                    <span>
+                        Predicted Distance
+                    </span>
+
+                    <strong>
+                        7.42 m
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Confidence
+                    </span>
+
+                    <strong>
+                        91%
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Talent Score
+                    </span>
+
+                    <strong>
+                        92 / 100
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Talent Level
+                    </span>
+
+                    <strong class="green">
+                        High Potential
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="preview-recommendation">
+
+                <p class="tag">
+                    AI RECOMMENDATION
+                </p>
+
+                <p>
+                    Continue improving approach speed
+                    and take-off explosiveness while
+                    maintaining the current take-off
+                    angle.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="preview-actions">
+
+            <button
+                class="secondary-button"
+                id="printReport">
+
+                Print Report
+
+            </button>
+
+
+            <button
+                class="primary-button"
+                id="downloadReport">
+
+                Download Report
+
+            </button>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+<script src="js/main.js"></script>
+<script src="js/reports.js"></script>
+
+</body>
+
+</html>

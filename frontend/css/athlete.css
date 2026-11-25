@@ -1,0 +1,426 @@
+/* ========================================
+   ATHLETE PAGE
+======================================== */
+
+.athlete-page {
+    padding: 60px 7% 100px;
+}
+
+
+/* Header */
+
+.athlete-header {
+    margin-bottom: 45px;
+}
+
+.athlete-header h1 {
+    font-size: 42px;
+
+    margin-bottom: 10px;
+}
+
+.athlete-header p:last-child {
+    color: var(--text-light);
+
+    font-size: 14px;
+
+    max-width: 600px;
+}
+
+
+/* Layout */
+
+.athlete-layout {
+    display: grid;
+
+    grid-template-columns: minmax(0, 2fr) 350px;
+
+    gap: 25px;
+
+    align-items: start;
+}
+
+
+/* Form Card */
+
+.athlete-form-card {
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    padding: 35px;
+}
+
+
+/* Form Title */
+
+.form-title {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    padding-bottom: 25px;
+
+    border-bottom: 1px solid var(--border);
+
+    margin-bottom: 30px;
+}
+
+.form-title h2 {
+    font-size: 21px;
+}
+
+.form-title p {
+    color: var(--text-light);
+
+    font-size: 12px;
+
+    margin-top: 5px;
+}
+
+.required {
+    color: var(--text-light);
+
+    font-size: 11px;
+}
+
+
+/* Form Section */
+
+.form-section {
+    margin-bottom: 35px;
+}
+
+.form-section h3 {
+    font-size: 14px;
+
+    margin-bottom: 20px;
+
+    color: var(--primary);
+}
+
+
+/* Form Grid */
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+
+/* Form Group */
+
+.form-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 12px;
+
+    color: #d8dee7;
+}
+
+.form-group label span {
+    color: var(--primary);
+}
+
+
+/* Inputs */
+
+.form-group input,
+.form-group select {
+    width: 100%;
+
+    height: 46px;
+
+    padding: 0 14px;
+
+    background: var(--background-light);
+
+    color: var(--text);
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
+
+    outline: none;
+
+    font-size: 13px;
+
+    transition: 0.3s;
+}
+
+.form-group input::placeholder {
+    color: #627386;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 2px rgba(56, 232, 165, 0.08);
+}
+
+
+/* Select */
+
+.form-group select {
+    cursor: pointer;
+}
+
+
+/* Unit Input */
+
+.input-unit {
+    position: relative;
+}
+
+.input-unit input {
+    padding-right: 55px;
+}
+
+.input-unit span {
+    position: absolute;
+
+    right: 14px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: var(--text-light);
+
+    font-size: 11px;
+
+    pointer-events: none;
+}
+
+
+/* Form Actions */
+
+.form-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    padding-top: 25px;
+
+    border-top: 1px solid var(--border);
+}
+
+.reset-button {
+    padding: 13px 22px;
+
+    background: transparent;
+
+    border: 1px solid var(--border);
+
+    color: var(--text-light);
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+}
+
+.reset-button:hover {
+    border-color: #aaa;
+
+    color: var(--text);
+}
+
+.form-actions .primary-button {
+    border: none;
+
+    cursor: pointer;
+}
+
+
+/* ========================================
+   INFO CARDS
+======================================== */
+
+.analysis-info {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+.info-card {
+    padding: 25px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+}
+
+.info-icon {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 18px;
+
+    border-radius: 7px;
+
+    background: rgba(56, 232, 165, 0.08);
+
+    color: var(--primary);
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+.info-card h3 {
+    font-size: 15px;
+
+    margin-bottom: 8px;
+}
+
+.info-card p {
+    color: var(--text-light);
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+/* Tip */
+
+.tip-card {
+    display: flex;
+
+    gap: 15px;
+
+    background:
+        rgba(56, 232, 165, 0.04);
+
+    border-color:
+        rgba(56, 232, 165, 0.15);
+}
+
+.tip-card > span {
+    font-size: 20px;
+}
+
+.tip-card h3 {
+    font-size: 13px;
+
+    color: var(--primary);
+}
+
+
+/* ========================================
+   FORM VALIDATION
+======================================== */
+
+.form-group.error input,
+.form-group.error select {
+    border-color: #e25b5b;
+}
+
+.form-error {
+    color: #e25b5b;
+
+    font-size: 10px;
+}
+
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 1050px) {
+
+    .athlete-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .analysis-info {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .tip-card {
+        grid-column: 1 / -1;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .athlete-page {
+        padding: 40px 5% 70px;
+    }
+
+    .athlete-header h1 {
+        font-size: 32px;
+    }
+
+    .athlete-form-card {
+        padding: 22px;
+    }
+
+    .form-title {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: auto;
+    }
+
+    .analysis-info {
+        grid-template-columns: 1fr;
+    }
+
+    .tip-card {
+        grid-column: auto;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .form-actions button {
+        width: 100%;
+        justify-content: center;
+    }
+
+}

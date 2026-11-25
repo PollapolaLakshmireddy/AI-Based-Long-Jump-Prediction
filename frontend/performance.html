@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Performance | Long Jump AI</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/performance.css">
+    <script src="js/auth.js"></script>
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        <span>LONG JUMP</span>
+        <strong>AI</strong>
+    </div>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+
+        <a href="dashboard.html">Dashboard</a>
+
+        <a href="athlete.html">Athlete</a>
+
+        <a href="athletes.html">Athletes</a>
+
+        <a href="prediction.html">Prediction</a>
+
+        <a href="video-analysis.html">Video Analysis</a>
+
+    </nav>
+
+    <a href="athletes.html" class="nav-button">
+        Athletes
+    </a>
+
+</header>
+
+
+<main class="performance-page">
+
+
+    <!-- Header -->
+
+    <section class="performance-header">
+
+        <div>
+
+            <p class="tag">
+                PERFORMANCE ANALYSIS
+            </p>
+
+            <h1>
+                Athlete Performance
+            </h1>
+
+            <p>
+                Track progress, analyze performance
+                and identify areas for improvement.
+            </p>
+
+        </div>
+
+
+        <select id="athleteSelector">
+
+            <option value="arjun">
+                Arjun Reddy
+            </option>
+
+            <option value="rahul">
+                Rahul Kumar
+            </option>
+
+            <option value="vikram">
+                Vikram Singh
+            </option>
+
+        </select>
+
+    </section>
+
+
+    <!-- Athlete Profile -->
+
+    <section class="performance-profile">
+
+        <div class="profile-left">
+
+            <div class="large-avatar" id="performanceAvatar">
+                AR
+            </div>
+
+            <div>
+
+                <p>
+                    ATHLETE
+                </p>
+
+                <h2 id="performanceAthleteName">
+                    Arjun Reddy
+                </h2>
+
+                <span id="performanceAthleteSub">
+                    21 years · Male
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-stats">
+
+            <div>
+
+                <span>
+                    Best Jump
+                </span>
+
+                <strong class="green" id="perfBestJump">
+                    7.42 m
+                </strong>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Average
+                </span>
+
+                <strong id="perfAverage">
+                    7.05 m
+                </strong>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Improvement
+                </span>
+
+                <strong class="green" id="perfImprovement">
+                    +8.4%
+                </strong>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Potential
+                </span>
+
+                <strong class="green" id="perfPotential">
+                    92%
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Main Charts -->
+
+    <section class="performance-grid">
+
+
+        <!-- Jump Progress -->
+
+        <div class="performance-card jump-progress-card">
+
+            <div class="card-title">
+
+                <div>
+
+                    <h3>
+                        Jump Distance Progress
+                    </h3>
+
+                    <p>
+                        Performance across recent attempts
+                    </p>
+
+                </div>
+
+                <select id="chartPeriod">
+
+                    <option value="6">
+                        Last 6 attempts
+                    </option>
+
+                    <option value="12">
+                        Last 12 attempts
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="performance-chart">
+
+                <div class="chart-y-axis">
+
+                    <span>8.0m</span>
+                    <span>7.5m</span>
+                    <span>7.0m</span>
+                    <span>6.5m</span>
+                    <span>6.0m</span>
+
+                </div>
+
+
+                <div class="chart-content">
+
+                    <div class="horizontal-line line-a"></div>
+                    <div class="horizontal-line line-b"></div>
+                    <div class="horizontal-line line-c"></div>
+                    <div class="horizontal-line line-d"></div>
+                    <div class="horizontal-line line-e"></div>
+
+
+                    <div class="performance-bars">
+
+                        <div class="performance-bar-item">
+
+                            <div
+                                class="performance-bar"
+                                style="height: 38%;">
+
+                            </div>
+
+                            <span>
+                                1
+                            </span>
+
+                        </div>
+
+
+                        <div class="performance-bar-item">
+
+                            <div
+                                class="performance-bar"
+                                style="height: 47%;">
+
+                            </div>
+
+                            <span>
+                                2
+                            </span>
+
+                        </div>
+
+
+                        <div class="performance-bar-item">
+
+                            <div
+                                class="performance-bar"
+                                style="height: 53%;">
+
+                            </div>
+
+                            <span>
+                                3
+                            </span>
+
+                        </div>
+
+
+                        <div class="performance-bar-item">
+
+                            <div
+                                class="performance-bar"
+                                style="height: 62%;">
+
+                            </div>
+
+                            <span>
+                                4
+                            </span>
+
+                        </div>
+
+
+                        <div class="performance-bar-item">
+
+                            <div
+                                class="performance-bar"
+                                style="height: 69%;">
+
+                            </div>
+
+                            <span>
+                                5
+                            </span>
+
+                        </div>
+
+
+                        <div class="performance-bar-item">
+
+                            <div
+                                class="performance-bar best-performance"
+                                style="height: 82%;">
+
+                            </div>
+
+                            <span>
+                                6
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Performance Score -->
+
+        <div class="performance-card score-card">
+
+            <div class="card-title">
+
+                <div>
+
+                    <h3>
+                        Performance Score
+                    </h3>
+
+                    <p>
+                        Overall assessment
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="score-circle">
+
+                <div>
+
+                    <strong id="perfScoreValue">
+                        92
+                    </strong>
+
+                    <span>
+                        / 100
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="score-status" id="perfScoreStatus">
+
+                <span class="status-dot"></span>
+
+                Excellent Performance
+
+            </div>
+
+
+            <p class="score-description">
+
+                This athlete is performing above
+                the average benchmark for their
+                current category.
+
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- Parameters -->
+
+    <section class="performance-card">
+
+        <div class="card-title">
+
+            <div>
+
+                <h3>
+                    Performance Parameters
+                </h3>
+
+                <p>
+                    Current physical and technical measurements
+                </p>
+
+            </div>
+
+            <a href="athlete.html">
+                Update Data →
+            </a>
+
+        </div>
+
+
+        <div class="metric-grid">
+
+
+            <div class="metric">
+
+                <span>
+                    Sprint Speed
+                </span>
+
+                <strong id="perfSprint">
+                    9.8
+                </strong>
+
+                <small>
+                    m/s
+                </small>
+
+                <div class="metric-progress">
+                    <div style="width: 88%;"></div>
+                </div>
+
+                <p>
+                    Excellent
+                </p>
+
+            </div>
+
+
+            <div class="metric">
+
+                <span>
+                    Vertical Jump
+                </span>
+
+                <strong id="perfVertical">
+                    65
+                </strong>
+
+                <small>
+                    cm
+                </small>
+
+                <div class="metric-progress">
+                    <div style="width: 78%;"></div>
+                </div>
+
+                <p>
+                    Good
+                </p>
+
+            </div>
+
+
+            <div class="metric">
+
+                <span>
+                    Standing Long Jump
+                </span>
+
+                <strong id="perfStanding">
+                    2.65
+                </strong>
+
+                <small>
+                    m
+                </small>
+
+                <div class="metric-progress">
+                    <div style="width: 82%;"></div>
+                </div>
+
+                <p>
+                    Excellent
+                </p>
+
+            </div>
+
+
+            <div class="metric">
+
+                <span>
+                    Take-off Speed
+                </span>
+
+                <strong id="perfTakeoffSpeed">
+                    8.7
+                </strong>
+
+                <small>
+                    m/s
+                </small>
+
+                <div class="metric-progress">
+                    <div style="width: 76%;"></div>
+                </div>
+
+                <p>
+                    Good
+                </p>
+
+            </div>
+
+
+            <div class="metric">
+
+                <span>
+                    Take-off Angle
+                </span>
+
+                <strong id="perfTakeoffAngle">
+                    20.4
+                </strong>
+
+                <small>
+                    degrees
+                </small>
+
+                <div class="metric-progress">
+                    <div style="width: 90%;"></div>
+                </div>
+
+                <p>
+                    Optimal
+                </p>
+
+            </div>
+
+
+            <div class="metric">
+
+                <span>
+                    Previous Best
+                </span>
+
+                <strong id="perfPreviousBest">
+                    6.85
+                </strong>
+
+                <small>
+                    m
+                </small>
+
+                <div class="metric-progress">
+                    <div style="width: 75%;"></div>
+                </div>
+
+                <p>
+                    Good
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Improvement Areas -->
+
+    <section class="improvement-grid">
+
+
+        <div class="performance-card">
+
+            <div class="card-title">
+
+                <div>
+
+                    <h3>
+                        Strengths
+                    </h3>
+
+                    <p>
+                        Areas where the athlete performs well
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="strength-item">
+
+                <span class="check">
+                    ✓
+                </span>
+
+                <div>
+
+                    <strong>
+                        Sprint Speed
+                    </strong>
+
+                    <p>
+                        Strong approach speed provides
+                        good horizontal momentum.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="strength-item">
+
+                <span class="check">
+                    ✓
+                </span>
+
+                <div>
+
+                    <strong>
+                        Take-off Angle
+                    </strong>
+
+                    <p>
+                        Current take-off angle is
+                        close to the optimal range.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="strength-item">
+
+                <span class="check">
+                    ✓
+                </span>
+
+                <div>
+
+                    <strong>
+                        Explosive Power
+                    </strong>
+
+                    <p>
+                        Strong standing jump indicates
+                        good lower-body power.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="performance-card">
+
+            <div class="card-title">
+
+                <div>
+
+                    <h3>
+                        Areas to Improve
+                    </h3>
+
+                    <p>
+                        Recommended focus areas
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="improvement-item">
+
+                <span class="warning">
+                    !
+                </span>
+
+                <div>
+
+                    <strong>
+                        Take-off Speed
+                    </strong>
+
+                    <p>
+                        Increasing take-off velocity
+                        may improve flight distance.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="improvement-item">
+
+                <span class="warning">
+                    !
+                </span>
+
+                <div>
+
+                    <strong>
+                        Landing Technique
+                    </strong>
+
+                    <p>
+                        Video analysis could identify
+                        potential landing improvements.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="improvement-item">
+
+                <span class="warning">
+                    !
+                </span>
+
+                <div>
+
+                    <strong>
+                        Run-up Consistency
+                    </strong>
+
+                    <p>
+                        Maintaining consistent approach
+                        speed can improve jump reliability.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+<script src="js/main.js"></script>
+<script src="js/performance.js"></script>
+
+</body>
+
+</html>

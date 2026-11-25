@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Registration - Long Jump AI</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        :root {
+            --bg-dark: #07111f;
+            --bg-card: #0e1d31;
+            --primary: #38e8a5;
+            --primary-dark: #20c98b;
+            --accent-blue: #3b82f6;
+            --text-main: #f5f7fa;
+            --text-muted: #a9b4c4;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-main);
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        .login-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .login-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(56, 232, 165, 0.3);
+            border-radius: 20px;
+            padding: 36px 32px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .login-card .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .login-card .logo span {
+            color: var(--primary);
+        }
+
+        .login-card h2 {
+            font-size: 22px;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .login-card p.subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        /* Mode Tabs */
+        .auth-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 24px;
+            gap: 4px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 10px 8px;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .auth-tab.active {
+            background: var(--primary);
+            color: #06121c;
+            box-shadow: 0 4px 12px rgba(56, 232, 165, 0.25);
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 16px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        .form-group select option {
+            background: #0e1d31;
+            color: #fff;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--primary);
+            color: #06121c;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(56, 232, 165, 0.3);
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 232, 165, 0.45);
+        }
+
+        .error-box {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .success-box {
+            background: rgba(56, 232, 165, 0.15);
+            border: 1px solid rgba(56, 232, 165, 0.4);
+            color: var(--primary);
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .sample-creds-container {
+            margin-top: 24px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 18px;
+        }
+
+        .sample-creds-title {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sample-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .sample-chip {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sample-chip:hover {
+            background: rgba(56, 232, 165, 0.15);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="logo">
+            <span>LONG JUMP</span>
+            <strong>AI</strong>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="instructions.html">Instructions</a>
+            <a href="login.html" class="active">Login</a>
+        </nav>
+    </header>
+
+    <!-- Main Authentication Area -->
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="logo">LONG JUMP <span>AI</span></div>
+            <h2 id="portalHeading">Sports Talent Portal</h2>
+            <p class="subtitle" id="portalSub">Sign in or register to access long jump identification tools.</p>
+
+            <!-- Authentication Mode Tabs -->
+            <div class="auth-tabs">
+                <button type="button" class="auth-tab active" id="tabAthleteLogin">Athlete Login</button>
+                <button type="button" class="auth-tab" id="tabAthleteRegister">Athlete Register</button>
+                <button type="button" class="auth-tab" id="tabAdminLogin">Admin Login</button>
+            </div>
+
+            <!-- Feedback Alerts -->
+            <div id="authError" class="error-box hidden"></div>
+            <div id="authSuccess" class="success-box hidden"></div>
+
+            <!-- 1. ATHLETE LOGIN FORM -->
+            <form id="athleteLoginForm">
+                <div class="form-group">
+                    <label for="athleteUsername">Athlete Username</label>
+                    <input type="text" id="athleteUsername" placeholder="e.g. arjun" required value="arjun">
+                </div>
+                <div class="form-group">
+                    <label for="athletePassword">Password</label>
+                    <input type="password" id="athletePassword" placeholder="Enter password" required value="Arjun@123">
+                </div>
+                <button type="submit" class="btn-submit">🏃 Sign In as Athlete</button>
+            </form>
+
+            <!-- 2. ATHLETE REGISTRATION FORM -->
+            <form id="athleteRegisterForm" class="hidden">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="regFullName">Full Name *</label>
+                        <input type="text" id="regFullName" placeholder="e.g. Suresh Raina" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regUsername">Username *</label>
+                        <input type="text" id="regUsername" placeholder="e.g. sraina" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="regEmail">Email Address</label>
+                        <input type="email" id="regEmail" placeholder="athlete@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Password *</label>
+                        <input type="password" id="regPassword" placeholder="Create password" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="regAge">Age (yrs)</label>
+                        <input type="number" id="regAge" placeholder="20" min="12" max="50" value="20">
+                    </div>
+                    <div class="form-group">
+                        <label for="regGender">Gender</label>
+                        <select id="regGender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="regHeight">Height (cm)</label>
+                        <input type="number" id="regHeight" placeholder="178" value="178">
+                    </div>
+                    <div class="form-group">
+                        <label for="regWeight">Weight (kg)</label>
+                        <input type="number" id="regWeight" placeholder="70" value="70">
+                    </div>
+                    <div class="form-group">
+                        <label for="regSkillLevel">Skill Level</label>
+                        <select id="regSkillLevel">
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                            <option value="Beginner">Beginner</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">✨ Complete Athlete Registration</button>
+            </form>
+
+            <!-- 3. ADMIN LOGIN FORM -->
+            <form id="adminLoginForm" class="hidden">
+                <div class="form-group">
+                    <label for="adminUsername">Admin Username</label>
+                    <input type="text" id="adminUsername" placeholder="e.g. admin" required value="admin">
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" placeholder="Enter password" required value="Admin@123">
+                </div>
+                <button type="submit" class="btn-submit">🔐 Sign In to Admin Portal</button>
+            </form>
+
+            <!-- Quick Sample Autofill Chips -->
+            <div class="sample-creds-container">
+                <div class="sample-creds-title">⚡ Quick Autofill Test Credentials:</div>
+                <div class="sample-chips">
+                    <button type="button" class="sample-chip" onclick="autofillAthlete('arjun', 'Arjun@123')">Arjun (High)</button>
+                    <button type="button" class="sample-chip" onclick="autofillAthlete('rahul', 'Rahul@123')">Rahul (Med)</button>
+                    <button type="button" class="sample-chip" onclick="autofillAthlete('neha', 'Neha@123')">Neha (Med)</button>
+                    <button type="button" class="sample-chip" onclick="autofillAdmin()">Head Admin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">LONG JUMP <strong>AI</strong></div>
+        <p>© 2026 Long Jump AI Sports Talent Assessment Platform.</p>
+    </footer>
+
+    <!-- Auth Script -->
+    <script src="js/auth.js"></script>
+    <script>
+        const tabAthleteLogin = document.getElementById("tabAthleteLogin");
+        const tabAthleteRegister = document.getElementById("tabAthleteRegister");
+        const tabAdminLogin = document.getElementById("tabAdminLogin");
+
+        const formAthleteLogin = document.getElementById("athleteLoginForm");
+        const formAthleteRegister = document.getElementById("athleteRegisterForm");
+        const formAdminLogin = document.getElementById("adminLoginForm");
+
+        const authError = document.getElementById("authError");
+        const authSuccess = document.getElementById("authSuccess");
+
+        function showMessage(type, msg) {
+            authError.classList.add("hidden");
+            authSuccess.classList.add("hidden");
+            if (type === "error") {
+                authError.textContent = msg;
+                authError.classList.remove("hidden");
+            } else if (type === "success") {
+                authSuccess.textContent = msg;
+                authSuccess.classList.remove("hidden");
+            }
+        }
+
+        function switchTab(activeTab, showForm) {
+            [tabAthleteLogin, tabAthleteRegister, tabAdminLogin].forEach(t => t.classList.remove("active"));
+            [formAthleteLogin, formAthleteRegister, formAdminLogin].forEach(f => f.classList.add("hidden"));
+            activeTab.classList.add("active");
+            showForm.classList.remove("hidden");
+            authError.classList.add("hidden");
+            authSuccess.classList.add("hidden");
+        }
+
+        tabAthleteLogin.addEventListener("click", () => switchTab(tabAthleteLogin, formAthleteLogin));
+        tabAthleteRegister.addEventListener("click", () => switchTab(tabAthleteRegister, formAthleteRegister));
+        tabAdminLogin.addEventListener("click", () => switchTab(tabAdminLogin, formAdminLogin));
+
+        // Athlete Login Submit
+        formAthleteLogin.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            showMessage("", "");
+            const username = document.getElementById("athleteUsername").value.trim();
+            const password = document.getElementById("athletePassword").value;
+
+            try {
+                const res = await fetch("/api/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await res.json();
+                if (!res.ok || !data.success) {
+                    throw new Error(data.message || "Login failed");
+                }
+                setAuthSession(data.token, data.user, data.profile, true);
+                showMessage("success", "✅ Login successful! Redirecting to Athlete Dashboard...");
+                setTimeout(() => { window.location.href = "athlete-dashboard.html"; }, 500);
+            } catch (err) {
+                showMessage("error", "❌ " + err.message);
+            }
+        });
+
+        // Athlete Register Submit
+        formAthleteRegister.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            showMessage("", "");
+
+            const payload = {
+                name: document.getElementById("regFullName").value.trim(),
+                username: document.getElementById("regUsername").value.trim(),
+                email: document.getElementById("regEmail").value.trim(),
+                password: document.getElementById("regPassword").value,
+                age: Number(document.getElementById("regAge").value),
+                gender: document.getElementById("regGender").value,
+                height: Number(document.getElementById("regHeight").value),
+                weight: Number(document.getElementById("regWeight").value),
+                skillLevel: document.getElementById("regSkillLevel").value
+            };
+
+            try {
+                const res = await fetch("/api/auth/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (!res.ok || !data.success) {
+                    throw new Error(data.message || "Registration failed");
+                }
+                setAuthSession(data.token, data.user, data.profile, true);
+                showMessage("success", "🎉 Athlete account registered successfully! Redirecting to Dashboard...");
+                setTimeout(() => { window.location.href = "athlete-dashboard.html"; }, 700);
+            } catch (err) {
+                showMessage("error", "❌ " + err.message);
+            }
+        });
+
+        // Admin Login Submit
+        formAdminLogin.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            showMessage("", "");
+            const username = document.getElementById("adminUsername").value.trim();
+            const password = document.getElementById("adminPassword").value;
+
+            try {
+                const res = await fetch("/api/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await res.json();
+                if (!res.ok || !data.success) {
+                    throw new Error(data.message || "Login failed");
+                }
+                if (data.user.role !== "admin") {
+                    throw new Error("This account does not have Admin privileges.");
+                }
+                setAuthSession(data.token, data.user, null, true);
+                showMessage("success", "✅ Admin authenticated! Redirecting to Admin Dashboard...");
+                setTimeout(() => { window.location.href = "admin-dashboard.html"; }, 500);
+            } catch (err) {
+                showMessage("error", "❌ " + err.message);
+            }
+        });
+
+        function autofillAthlete(user, pass) {
+            switchTab(tabAthleteLogin, formAthleteLogin);
+            document.getElementById("athleteUsername").value = user;
+            document.getElementById("athletePassword").value = pass;
+        }
+
+        function autofillAdmin() {
+            switchTab(tabAdminLogin, formAdminLogin);
+            document.getElementById("adminUsername").value = "admin";
+            document.getElementById("adminPassword").value = "Admin@123";
+        }
+    </script>
+</body>
+</html>

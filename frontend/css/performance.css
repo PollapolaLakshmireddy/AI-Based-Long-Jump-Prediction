@@ -1,0 +1,625 @@
+/* ========================================
+   PERFORMANCE PAGE
+======================================== */
+
+.performance-page {
+    padding: 60px 7% 100px;
+}
+
+
+/* Header */
+
+.performance-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: end;
+
+    margin-bottom: 40px;
+}
+
+.performance-header h1 {
+    font-size: 42px;
+
+    margin-bottom: 10px;
+}
+
+.performance-header p:last-child {
+    color: var(--text-light);
+
+    font-size: 14px;
+}
+
+.performance-header select {
+    min-width: 180px;
+
+    height: 44px;
+
+    padding: 0 14px;
+
+    background: var(--background-light);
+
+    color: var(--text);
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
+
+    outline: none;
+}
+
+
+/* Profile */
+
+.performance-profile {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 25px 30px;
+
+    margin-bottom: 18px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+}
+
+.profile-left {
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+}
+
+.large-avatar {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(56,232,165,0.1);
+
+    color: var(--primary);
+
+    font-weight: bold;
+}
+
+.profile-left p {
+    color: var(--primary);
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+}
+
+.profile-left h2 {
+    font-size: 20px;
+
+    margin: 3px 0;
+}
+
+.profile-left span {
+    color: var(--text-light);
+
+    font-size: 11px;
+}
+
+.profile-stats {
+    display: flex;
+
+    gap: 35px;
+}
+
+.profile-stats div {
+    text-align: right;
+}
+
+.profile-stats span {
+    display: block;
+
+    color: var(--text-light);
+
+    font-size: 10px;
+
+    margin-bottom: 4px;
+}
+
+.profile-stats strong {
+    font-size: 18px;
+}
+
+
+/* Main Grid */
+
+.performance-grid {
+    display: grid;
+
+    grid-template-columns: 2fr 1fr;
+
+    gap: 18px;
+
+    margin-bottom: 18px;
+}
+
+.performance-card {
+    padding: 28px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    margin-bottom: 18px;
+}
+
+
+/* Card title */
+
+.card-title {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.card-title h3 {
+    font-size: 17px;
+}
+
+.card-title p {
+    color: var(--text-light);
+
+    font-size: 11px;
+
+    margin-top: 4px;
+}
+
+.card-title select {
+    background: var(--background-light);
+
+    color: var(--text);
+
+    border: 1px solid var(--border);
+
+    border-radius: 5px;
+
+    padding: 7px 10px;
+}
+
+.card-title a {
+    color: var(--primary);
+
+    text-decoration: none;
+
+    font-size: 11px;
+}
+
+
+/* Chart */
+
+.performance-chart {
+    display: flex;
+
+    height: 300px;
+}
+
+.chart-y-axis {
+    width: 45px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    padding-bottom: 30px;
+
+    color: var(--text-light);
+
+    font-size: 9px;
+}
+
+.chart-content {
+    flex: 1;
+
+    position: relative;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.horizontal-line {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    height: 1px;
+
+    background: var(--border);
+}
+
+.line-a {
+    top: 0;
+}
+
+.line-b {
+    top: 25%;
+}
+
+.line-c {
+    top: 50%;
+}
+
+.line-d {
+    top: 75%;
+}
+
+.line-e {
+    bottom: 0;
+}
+
+.performance-bars {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    justify-content: space-around;
+
+    align-items: end;
+
+    padding: 0 30px;
+}
+
+.performance-bar-item {
+    height: 100%;
+
+    width: 35px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: end;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+.performance-bar {
+    width: 28px;
+
+    background: #25475c;
+
+    border-radius: 4px 4px 0 0;
+
+    transition: 0.3s;
+}
+
+.performance-bar:hover,
+.best-performance {
+    background: var(--primary);
+}
+
+.performance-bar-item span {
+    color: var(--text-light);
+
+    font-size: 10px;
+}
+
+
+/* Score */
+
+.score-card {
+    text-align: center;
+}
+
+.score-card .card-title {
+    text-align: left;
+}
+
+.score-circle {
+    width: 170px;
+    height: 170px;
+
+    margin: 25px auto;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            var(--primary) 0deg 331deg,
+            #18354a 331deg 360deg
+        );
+}
+
+.score-circle::before {
+    content: "";
+
+    position: absolute;
+
+    width: 125px;
+    height: 125px;
+
+    border-radius: 50%;
+
+    background: var(--card);
+}
+
+.score-circle div {
+    position: relative;
+
+    z-index: 2;
+}
+
+.score-circle strong {
+    font-size: 45px;
+}
+
+.score-circle span {
+    color: var(--text-light);
+
+    font-size: 11px;
+}
+
+.score-status {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: var(--primary);
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--primary);
+}
+
+.score-description {
+    color: var(--text-light);
+
+    font-size: 11px;
+
+    line-height: 1.7;
+
+    margin-top: 18px;
+}
+
+
+/* Metrics */
+
+.metric-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 12px;
+}
+
+.metric {
+    padding: 20px;
+
+    background: var(--background-light);
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+}
+
+.metric > span {
+    display: block;
+
+    color: var(--text-light);
+
+    font-size: 10px;
+}
+
+.metric strong {
+    font-size: 24px;
+
+    margin-top: 10px;
+
+    display: inline-block;
+}
+
+.metric small {
+    color: var(--text-light);
+
+    font-size: 9px;
+}
+
+.metric-progress {
+    height: 4px;
+
+    margin-top: 12px;
+
+    background: #1a3143;
+
+    border-radius: 5px;
+
+    overflow: hidden;
+}
+
+.metric-progress div {
+    height: 100%;
+
+    background: var(--primary);
+
+    border-radius: 5px;
+}
+
+.metric p {
+    color: var(--primary);
+
+    font-size: 9px;
+
+    margin-top: 8px;
+}
+
+
+/* Improvements */
+
+.improvement-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+}
+
+.strength-item,
+.improvement-item {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 15px 0;
+
+    border-top: 1px solid var(--border);
+}
+
+.check,
+.warning {
+    width: 28px;
+    height: 28px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.check {
+    color: var(--primary);
+
+    background: rgba(56,232,165,0.1);
+}
+
+.warning {
+    color: #e2a84a;
+
+    background: rgba(226,168,74,0.1);
+}
+
+.strength-item strong,
+.improvement-item strong {
+    font-size: 12px;
+}
+
+.strength-item p,
+.improvement-item p {
+    color: var(--text-light);
+
+    font-size: 10px;
+
+    line-height: 1.6;
+
+    margin-top: 4px;
+}
+
+
+/* Responsive */
+
+@media (max-width: 1000px) {
+
+    .performance-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-stats {
+        gap: 20px;
+    }
+
+    .metric-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .performance-page {
+        padding: 40px 5% 70px;
+    }
+
+    .performance-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+    .performance-header h1 {
+        font-size: 32px;
+    }
+
+    .performance-profile {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 25px;
+    }
+
+    .profile-stats {
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .profile-stats div {
+        text-align: left;
+    }
+
+    .metric-grid,
+    .improvement-grid {
+        grid-template-columns: 1fr;
+    }
+
+}

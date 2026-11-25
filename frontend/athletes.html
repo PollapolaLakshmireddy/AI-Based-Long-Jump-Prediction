@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Athletes | Long Jump AI</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/athletes.css">
+    <script src="js/auth.js"></script>
+
+</head>
+
+<body>
+
+
+<!-- ================================
+     NAVBAR
+================================ -->
+
+<header class="navbar">
+
+    <div class="logo">
+        <span>LONG JUMP</span>
+        <strong>AI</strong>
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="athlete.html">
+            Athlete
+        </a>
+
+        <a href="athletes.html"
+           class="active">
+            Athletes
+        </a>
+
+        <a href="prediction.html">
+            Prediction
+        </a>
+
+        <a href="video-analysis.html">
+            Video Analysis
+        </a>
+
+    </nav>
+
+
+    <a
+        href="athlete.html"
+        class="nav-button">
+
+        Add Athlete
+
+    </a>
+
+</header>
+
+
+
+<!-- ================================
+     MAIN
+================================ -->
+
+<main class="athletes-page">
+
+
+    <!-- Header -->
+
+    <section class="athletes-header">
+
+        <div>
+
+            <p class="tag">
+                ATHLETE MANAGEMENT
+            </p>
+
+            <h1>
+                Athletes
+            </h1>
+
+            <p>
+                View, search and manage athlete
+                performance information.
+            </p>
+
+        </div>
+
+
+        <a
+            href="athlete.html"
+            class="primary-button">
+
+            + Add Athlete
+
+        </a>
+
+    </section>
+
+
+
+    <!-- ================================
+         SUMMARY
+    ================================= -->
+
+    <section class="athletes-summary">
+
+
+        <div class="summary-card">
+
+            <span>
+                Total Athletes
+            </span>
+
+            <strong id="totalAthletes">
+                120
+            </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <span>
+                High Potential
+            </span>
+
+            <strong class="green">
+                24
+            </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <span>
+                Average Jump
+            </span>
+
+            <strong>
+                6.42 m
+            </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <span>
+                Best Jump
+            </span>
+
+            <strong class="green">
+                7.81 m
+            </strong>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ================================
+         ATHLETE TABLE CARD
+    ================================= -->
+
+    <section class="athletes-card">
+
+
+        <!-- Toolbar -->
+
+        <div class="athletes-toolbar">
+
+
+            <!-- Search -->
+
+            <div class="search-box">
+
+                <span>
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    id="searchAthlete"
+                    placeholder="Search athlete..."
+                >
+
+            </div>
+
+
+
+            <!-- Filter -->
+
+            <div class="filter-group">
+
+                <label for="talentFilter">
+                    Talent:
+                </label>
+
+                <select id="talentFilter">
+
+                    <option value="all">
+                        All
+                    </option>
+
+                    <option value="high">
+                        High
+                    </option>
+
+                    <option value="medium">
+                        Medium
+                    </option>
+
+                    <option value="developing">
+                        Developing
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- Sort -->
+
+            <div class="filter-group">
+
+                <label for="sortAthletes">
+                    Sort:
+                </label>
+
+                <select id="sortAthletes">
+
+                    <option value="name">
+                        Name
+                    </option>
+
+                    <option value="jump">
+                        Jump Distance
+                    </option>
+
+                    <option value="potential">
+                        Potential
+                    </option>
+
+                </select>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- Table -->
+
+        <div class="athletes-table">
+
+
+            <!-- Table Header -->
+
+            <div class="athletes-table-header">
+
+                <span>
+                    Athlete
+                </span>
+
+                <span>
+                    Age
+                </span>
+
+                <span>
+                    Best Jump
+                </span>
+
+                <span>
+                    Potential
+                </span>
+
+                <span>
+                    Talent
+                </span>
+
+                <span>
+                    Action
+                </span>
+
+            </div>
+
+
+
+            <!-- Rows -->
+
+            <div id="athleteList">
+
+
+                <!-- Row 1 -->
+
+                <div
+                    class="athlete-row"
+                    data-name="arjun reddy"
+                    data-talent="high"
+                    data-jump="7.42"
+                    data-potential="92"
+                >
+
+                    <div class="athlete-cell-name">
+
+                        <div class="athlete-avatar">
+                            AR
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Arjun Reddy
+                            </strong>
+
+                            <span>
+                                Male
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <span>
+                        21
+                    </span>
+
+
+                    <strong>
+                        7.42 m
+                    </strong>
+
+
+                    <strong class="green">
+                        92%
+                    </strong>
+
+
+                    <span class="badge high-badge">
+                        High
+                    </span>
+
+
+                    <button
+                        class="view-button"
+                        onclick="viewAthlete('Arjun Reddy')">
+
+                        View →
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- Row 2 -->
+
+                <div
+                    class="athlete-row"
+                    data-name="rahul kumar"
+                    data-talent="medium"
+                    data-jump="6.81"
+                    data-potential="76"
+                >
+
+                    <div class="athlete-cell-name">
+
+                        <div class="athlete-avatar">
+                            RK
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Rahul Kumar
+                            </strong>
+
+                            <span>
+                                Male
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <span>
+                        19
+                    </span>
+
+
+                    <strong>
+                        6.81 m
+                    </strong>
+
+
+                    <strong class="medium-text">
+                        76%
+                    </strong>
+
+
+                    <span class="badge medium-badge">
+                        Medium
+                    </span>
+
+
+                    <button
+                        class="view-button"
+                        onclick="viewAthlete('Rahul Kumar')">
+
+                        View →
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- Row 3 -->
+
+                <div
+                    class="athlete-row"
+                    data-name="vikram singh"
+                    data-talent="high"
+                    data-jump="7.12"
+                    data-potential="88"
+                >
+
+                    <div class="athlete-cell-name">
+
+                        <div class="athlete-avatar">
+                            VS
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Vikram Singh
+                            </strong>
+
+                            <span>
+                                Male
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <span>
+                        20
+                    </span>
+
+
+                    <strong>
+                        7.12 m
+                    </strong>
+
+
+                    <strong class="green">
+                        88%
+                    </strong>
+
+
+                    <span class="badge high-badge">
+                        High
+                    </span>
+
+
+                    <button
+                        class="view-button"
+                        onclick="viewAthlete('Vikram Singh')">
+
+                        View →
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- Row 4 -->
+
+                <div
+                    class="athlete-row"
+                    data-name="aditya mishra"
+                    data-talent="developing"
+                    data-jump="6.24"
+                    data-potential="61"
+                >
+
+                    <div class="athlete-cell-name">
+
+                        <div class="athlete-avatar">
+                            AM
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Aditya Mishra
+                            </strong>
+
+                            <span>
+                                Male
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <span>
+                        18
+                    </span>
+
+
+                    <strong>
+                        6.24 m
+                    </strong>
+
+
+                    <strong class="developing-text">
+                        61%
+                    </strong>
+
+
+                    <span class="badge developing-badge">
+                        Developing
+                    </span>
+
+
+                    <button
+                        class="view-button"
+                        onclick="viewAthlete('Aditya Mishra')">
+
+                        View →
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- Row 5 -->
+
+                <div
+                    class="athlete-row"
+                    data-name="rohan patel"
+                    data-talent="high"
+                    data-jump="7.28"
+                    data-potential="90"
+                >
+
+                    <div class="athlete-cell-name">
+
+                        <div class="athlete-avatar">
+                            RP
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Rohan Patel
+                            </strong>
+
+                            <span>
+                                Male
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <span>
+                        22
+                    </span>
+
+
+                    <strong>
+                        7.28 m
+                    </strong>
+
+
+                    <strong class="green">
+                        90%
+                    </strong>
+
+
+                    <span class="badge high-badge">
+                        High
+                    </span>
+
+
+                    <button
+                        class="view-button"
+                        onclick="viewAthlete('Rohan Patel')">
+
+                        View →
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- Row 6 -->
+
+                <div
+                    class="athlete-row"
+                    data-name="neha sharma"
+                    data-talent="medium"
+                    data-jump="6.67"
+                    data-potential="72"
+                >
+
+                    <div class="athlete-cell-name">
+
+                        <div class="athlete-avatar">
+                            NS
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Neha Sharma
+                            </strong>
+
+                            <span>
+                                Female
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <span>
+                        20
+                    </span>
+
+
+                    <strong>
+                        6.67 m
+                    </strong>
+
+
+                    <strong class="medium-text">
+                        72%
+                    </strong>
+
+
+                    <span class="badge medium-badge">
+                        Medium
+                    </span>
+
+
+                    <button
+                        class="view-button"
+                        onclick="viewAthlete('Neha Sharma')">
+
+                        View →
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- Empty State -->
+
+            <div
+                id="emptyState"
+                class="empty-state">
+
+                <div>
+                    🔍
+                </div>
+
+                <h3>
+                    No athletes found
+                </h3>
+
+                <p>
+                    Try changing your search or filter.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Pagination -->
+
+        <div class="pagination">
+
+            <button>
+                ←
+            </button>
+
+            <button class="active-page">
+                1
+            </button>
+
+            <button>
+                2
+            </button>
+
+            <button>
+                3
+            </button>
+
+            <span>
+                ...
+            </span>
+
+            <button>
+                12
+            </button>
+
+            <button>
+                →
+            </button>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+<script src="js/main.js"></script>
+<script src="js/athletes.js"></script>
+
+</body>
+
+</html>

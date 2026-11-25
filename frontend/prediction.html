@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prediction Engine | Long Jump AI</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/prediction.css">
+    <script src="js/auth.js"></script>
+
+    <style>
+        :root {
+            --bg-dark: #07111f;
+            --bg-card: #0e1d31;
+            --primary: #38e8a5;
+            --primary-dark: #20c98b;
+            --accent-blue: #3b82f6;
+            --text-main: #f5f7fa;
+            --text-muted: #a9b4c4;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-main);
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .prediction-container {
+            width: 92%;
+            max-width: 1320px;
+            margin: 40px auto 60px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            color: var(--text-main);
+        }
+
+        .page-header h1 span {
+            color: var(--primary);
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .prediction-layout {
+            display: grid;
+            grid-template-columns: 1.15fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (max-width: 1024px) {
+            .prediction-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .dashboard-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 26px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 25px;
+        }
+
+        .card-header-clean {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 14px;
+            margin-bottom: 20px;
+        }
+
+        .card-header-clean h2 {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-subtitle {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--primary);
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .form-group input,
+        .form-group select {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 11px 13px;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+        }
+
+        .form-group option {
+            background: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        .bmi-box {
+            background: rgba(56, 232, 165, 0.08);
+            border: 1px solid rgba(56, 232, 165, 0.2);
+            color: var(--primary);
+            padding: 11px 13px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .btn-predict {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #07111f;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 14px 28px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(56, 232, 165, 0.3);
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn-predict:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 232, 165, 0.45);
+        }
+
+        .btn-predict:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Results Panel Styling */
+        .results-panel {
+            position: sticky;
+            top: 20px;
+        }
+
+        .empty-results-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 60px 30px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .empty-results-box span.icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 15px;
+            opacity: 0.6;
+        }
+
+        .distance-hero {
+            background: linear-gradient(135deg, rgba(56, 232, 165, 0.12), rgba(32, 201, 139, 0.05));
+            border: 1px solid rgba(56, 232, 165, 0.35);
+            border-radius: 14px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .distance-hero span.label {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .distance-hero .value {
+            font-size: 56px;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.1;
+            margin: 6px 0;
+        }
+
+        .distance-hero .value small {
+            font-size: 24px;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .metrics-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .metric-box-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .metric-box-card span {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .metric-box-card strong {
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        .suggestions-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .suggestion-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .suggestion-card.status-optimal {
+            border-left: 4px solid var(--primary);
+        }
+
+        .suggestion-card.status-needswork {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .suggestion-card.status-good {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .suggestion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .suggestion-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .suggestion-badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .badge-optimal {
+            background: rgba(56, 232, 165, 0.15);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .badge-needswork {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid #f59e0b;
+        }
+
+        .badge-good {
+            background: rgba(59, 130, 246, 0.15);
+            color: #93c5fd;
+            border: 1px solid #3b82f6;
+        }
+
+        .suggestion-obs {
+            font-size: 13px;
+            color: var(--text-main);
+            line-height: 1.45;
+        }
+
+        .suggestion-tip {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.45;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 2px solid var(--primary);
+        }
+
+        .roadmap-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .roadmap-card h4 {
+            color: var(--primary);
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .roadmap-card ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--text-main);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .action-row a,
+        .action-row button {
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-results-dash {
+            background: rgba(56, 232, 165, 0.15);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .btn-results-dash:hover {
+            background: var(--primary);
+            color: #07111f;
+        }
+
+        .btn-video-nav {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .btn-video-nav:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .error-alert {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="logo">
+            <span>LONG JUMP</span>
+            <strong>AI</strong>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="prediction.html" class="active">Prediction</a>
+            <a href="video-analysis.html">Video Analysis</a>
+            <a href="results.html">Results</a>
+        </nav>
+
+        <a href="results.html" class="nav-button">
+            Results Dashboard →
+        </a>
+    </header>
+
+    <!-- Main Container -->
+    <main class="prediction-container">
+
+        <!-- Page Header -->
+        <section class="page-header">
+            <div>
+                <p class="tag" style="display: inline-block; background: rgba(56, 232, 165, 0.12); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 8px; border: 1px solid rgba(56, 232, 165, 0.3);">
+                    AI BIOMECHANICAL PREDICTION ENGINE
+                </p>
+                <h1>Long Jump <span>Performance Prediction</span></h1>
+                <p>Input athlete parameters to predict potential jump distance and generate actionable biomechanical coaching suggestions.</p>
+            </div>
+
+            <div>
+                <a href="video-analysis.html" class="btn-video-nav">
+                    📹 Or Analyze Video Instead
+                </a>
+            </div>
+        </section>
+
+        <!-- Main Layout: Form (Left) & Results (Right) -->
+        <div class="prediction-layout">
+
+            <!-- LEFT COLUMN: Parameter Input Form -->
+            <div class="form-column">
+                <div class="dashboard-card">
+                    <div class="card-header-clean">
+                        <h2><span>⚙️</span> Athlete Parameters Input</h2>
+                        <span style="font-size: 12px; color: var(--text-muted);">Trained ML Model</span>
+                    </div>
+
+                    <form id="predictionForm">
+                        <!-- 1. Physical Profile -->
+                        <span class="section-subtitle">1. Physical Profile & Biometrics</span>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="age">Age (years) *</label>
+                                <input type="number" id="age" value="20" min="10" max="60" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gender">Gender *</label>
+                                <select id="gender" required>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="height">Height (cm) *</label>
+                                <input type="number" id="height" value="178" min="120" max="230" step="0.5" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="weight">Weight (kg) *</label>
+                                <input type="number" id="weight" value="72" min="30" max="150" step="0.5" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>BMI (kg/m²)</label>
+                                <div id="bmiDisplay" class="bmi-box">22.72</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="skillLevel">Skill Level</label>
+                                <select id="skillLevel">
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate" selected>Intermediate</option>
+                                    <option value="Advanced">Advanced</option>
+                                    <option value="Elite">Elite</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 2. Runup & Launch Biomechanics -->
+                        <span class="section-subtitle">2. Approach Runway & Launch Biomechanics</span>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="sprintSpeed">Runway Sprint Speed (m/s) *</label>
+                                <input type="number" id="sprintSpeed" value="9.2" min="4.0" max="12.0" step="0.1" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="takeoffAngle">Takeoff Launch Angle (deg) *</label>
+                                <input type="number" id="takeoffAngle" value="20.5" min="5.0" max="45.0" step="0.1" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="runupDistance">Run-up Distance (m)</label>
+                                <input type="number" id="runupDistance" value="35.0" min="15.0" max="55.0" step="0.5">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="runupStyle">Run-up Style</label>
+                                <select id="runupStyle">
+                                    <option value="Controlled">Controlled</option>
+                                    <option value="Progressive" selected>Progressive</option>
+                                    <option value="Aggressive">Aggressive</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="takeoffFoot">Takeoff Foot</label>
+                                <select id="takeoffFoot">
+                                    <option value="Right" selected>Right</option>
+                                    <option value="Left">Left</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="reactionTime">Reaction Time (sec)</label>
+                                <input type="number" id="reactionTime" value="0.18" min="0.10" max="0.50" step="0.01">
+                            </div>
+                        </div>
+
+                        <!-- 3. Physical Conditioning & Power Scores -->
+                        <span class="section-subtitle">3. Athletic Conditioning & Power (Scores 0–100)</span>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="legStrength">Leg Strength Score</label>
+                                <input type="number" id="legStrength" value="80" min="0" max="100">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="flexibility">Flexibility Score</label>
+                                <input type="number" id="flexibility" value="75" min="0" max="100">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="balance">Balance Score</label>
+                                <input type="number" id="balance" value="78" min="0" max="100">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="endurance">Endurance Score</label>
+                                <input type="number" id="endurance" value="72" min="0" max="100">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="trainingHours">Training Hours / Week</label>
+                                <input type="number" id="trainingHours" value="12" min="1" max="40" step="0.5">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="previousInjuries">Previous Injuries</label>
+                                <select id="previousInjuries">
+                                    <option value="None" selected>None</option>
+                                    <option value="Minor">Minor</option>
+                                    <option value="Moderate">Moderate</option>
+                                    <option value="Major">Major</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="coachRating">Coach Rating (0–10)</label>
+                                <input type="number" id="coachRating" value="8.0" min="0" max="10" step="0.5">
+                            </div>
+                        </div>
+
+                        <button id="predictBtn" type="submit" class="btn-predict">
+                            <span>⚡</span> Predict Jump Distance & Get AI Suggestions
+                        </button>
+                    </form>
+
+                    <div id="formError" class="error-alert hidden"></div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Results & Coaching Suggestions -->
+            <div class="results-panel">
+
+                <!-- Placeholder state before prediction -->
+                <div id="resultsPlaceholder" class="empty-results-box">
+                    <span class="icon">📊</span>
+                    <h3 style="color: var(--text-main); margin-bottom: 8px;">Awaiting Prediction Request</h3>
+                    <p style="margin: 0 0 15px 0;">Enter athlete parameters on the left and click <strong>Predict Jump Distance</strong> to generate real-time machine learning predictions and customized coaching advice.</p>
+                </div>
+
+                <!-- Live Results Container (revealed on predict) -->
+                <div id="predictionResultsCard" class="dashboard-card hidden">
+                    <div class="card-header-clean">
+                        <h2><span>🎯</span> AI Prediction Diagnosis</h2>
+                        <span class="badge" id="talentBadge" style="background: rgba(56, 232, 165, 0.15); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-weight: bold; border: 1px solid var(--primary); font-size: 12px;">High Potential</span>
+                    </div>
+
+                    <!-- Main Distance Callout -->
+                    <div class="distance-hero">
+                        <span class="label">Estimated Jump Distance</span>
+                        <div class="value" id="predDistanceVal">7.24 <small>m</small></div>
+                        <p id="predSummaryText" style="margin: 0; color: var(--text-muted); font-size: 13px;">Calculated using AI regression and kinematic velocity conversion.</p>
+                    </div>
+
+                    <!-- 3 Metric Highlights -->
+                    <div class="metrics-grid-3">
+                        <div class="metric-box-card">
+                            <span>Talent Tier</span>
+                            <strong id="predTalentVal">--</strong>
+                        </div>
+                        <div class="metric-box-card">
+                            <span>Confidence</span>
+                            <strong id="predConfVal">--</strong>
+                        </div>
+                        <div class="metric-box-card">
+                            <span>Launch Impulse</span>
+                            <strong id="predLaunchVal">Optimal</strong>
+                        </div>
+                    </div>
+
+                    <!-- Class Probabilities -->
+                    <div id="probabilitiesBox" style="margin-bottom: 22px;">
+                        <span class="section-subtitle" style="margin-top: 0;">Performance Classification Probabilities</span>
+                        <div id="probBars"></div>
+                    </div>
+
+                    <!-- Personalized Coaching Suggestions -->
+                    <div>
+                        <span class="section-subtitle">💡 Biomechanical Coaching Suggestions</span>
+                        <div id="suggestionsContainer" class="suggestions-grid"></div>
+                    </div>
+
+                    <!-- Strategic Training Roadmap -->
+                    <div class="roadmap-card" id="roadmapBox">
+                        <h4>🎯 Strategic Training Roadmap</h4>
+                        <ul id="roadmapBullets"></ul>
+                    </div>
+
+                    <!-- Action Navigation -->
+                    <div class="action-row">
+                        <a href="results.html" class="btn-results-dash">
+                            📊 View in Results Dashboard →
+                        </a>
+                        <a href="video-analysis.html" class="btn-video-nav">
+                            📹 Analyze Video
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">
+            LONG JUMP <strong>AI</strong>
+        </div>
+        <p>AI-Powered Long Jump Talent Identification & Biomechanical Performance Analysis.</p>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="prediction.html">Prediction</a>
+            <a href="video-analysis.html">Video Analysis</a>
+            <a href="results.html">Results</a>
+        </div>
+        <p class="copyright">© 2026 Long Jump AI. All rights reserved.</p>
+    </footer>
+
+    <script src="js/prediction.js"></script>
+
+</body>
+</html>

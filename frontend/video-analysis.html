@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Long Jump AI - Video Analysis Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/video.css">
+    <script src="js/auth.js"></script>
+
+    <style>
+        :root {
+            --bg-dark: #07111f;
+            --bg-card: #0e1d31;
+            --primary: #38e8a5;
+            --primary-dark: #20c98b;
+            --accent-blue: #3b82f6;
+            --text-main: #f5f7fa;
+            --text-muted: #a9b4c4;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-main);
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard-container {
+            width: 92%;
+            max-width: 1280px;
+            margin: 40px auto 60px;
+        }
+
+        .page-header {
+            margin-bottom: 35px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .page-header h1 span {
+            color: var(--primary);
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        .dashboard-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .dashboard-card:hover {
+            border-color: rgba(56, 232, 165, 0.25);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 22px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-title span.badge {
+            font-size: 12px;
+            background: rgba(56, 232, 165, 0.12);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(56, 232, 165, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Results Board Wrapper Styling - ALWAYS VISIBLE */
+        .results-board-wrapper {
+            background: rgba(14, 29, 49, 0.7);
+            border: 2px solid rgba(56, 232, 165, 0.35);
+            border-radius: 20px;
+            padding: 32px;
+            margin-top: 35px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
+        }
+
+        .results-board-header {
+            border-bottom: 2px solid rgba(56, 232, 165, 0.25);
+            padding-bottom: 18px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .results-board-header h2 {
+            font-size: 26px;
+            color: var(--primary);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .results-board-header p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .status-indicator {
+            background: rgba(56, 232, 165, 0.15);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Upload Area */
+        .upload-area {
+            border: 2px dashed rgba(56, 232, 165, 0.4);
+            background: rgba(14, 29, 49, 0.6);
+            padding: 45px 25px;
+            text-align: center;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(56, 232, 165, 0.04);
+        }
+
+        #videoInput {
+            display: none;
+        }
+
+        .btn-choose {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-choose:hover {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .file-name-display {
+            margin: 16px 0;
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .btn-analyze {
+            background: var(--primary);
+            color: #06121c;
+            border: none;
+            padding: 16px 38px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 18px rgba(56, 232, 165, 0.3);
+        }
+
+        .btn-analyze:hover:not(:disabled) {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(56, 232, 165, 0.45);
+        }
+
+        .btn-analyze:disabled,
+        .btn-choose:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Loading Indicator */
+        .loading-box {
+            text-align: center;
+            padding: 30px;
+            background: rgba(56, 232, 165, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(56, 232, 165, 0.2);
+            margin-top: 20px;
+        }
+
+        .spinner {
+            width: 45px;
+            height: 45px;
+            border: 4px solid rgba(56, 232, 165, 0.2);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Error Alert */
+        .error-alert {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        /* Video Player Styling */
+        video {
+            width: 100%;
+            max-height: 550px;
+            border-radius: 12px;
+            background: #000;
+            border: 1px solid var(--border-color);
+            outline: none;
+        }
+
+        .video-placeholder {
+            background: #040a14;
+            border: 1px dashed var(--border-color);
+            padding: 60px 20px;
+            border-radius: 12px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Metric Grid & Boxes */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .metric-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 18px 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .metric-box.highlighted {
+            background: rgba(56, 232, 165, 0.06);
+            border-color: rgba(56, 232, 165, 0.25);
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .metric-value.text-white {
+            color: var(--text-main);
+        }
+
+        /* Form Controls */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .form-group input,
+        .form-group select {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+        }
+
+        .form-group option {
+            background: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        .bmi-box {
+            background: rgba(56, 232, 165, 0.08);
+            border: 1px solid rgba(56, 232, 165, 0.2);
+            color: var(--primary);
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        /* Notes List */
+        .notes-list {
+            padding-left: 20px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .notes-list li {
+            margin-bottom: 8px;
+        }
+
+        .notes-list li::marker {
+            color: var(--primary);
+        }
+
+        /* Manual Predict Button & Suggestions */
+        .btn-manual-predict {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #07111f;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(56, 232, 165, 0.3);
+        }
+
+        .btn-manual-predict:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 232, 165, 0.45);
+        }
+
+        .btn-manual-predict:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .suggestions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .suggestion-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: border-color 0.2s ease;
+        }
+
+        .suggestion-card.status-optimal {
+            border-left: 4px solid var(--primary);
+        }
+
+        .suggestion-card.status-needswork {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .suggestion-card.status-good {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .suggestion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2px;
+        }
+
+        .suggestion-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .suggestion-badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .badge-optimal {
+            background: rgba(56, 232, 165, 0.15);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .badge-needswork {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid #f59e0b;
+        }
+
+        .badge-good {
+            background: rgba(59, 130, 246, 0.15);
+            color: #93c5fd;
+            border: 1px solid #3b82f6;
+        }
+
+        .suggestion-metrics {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            gap: 12px;
+        }
+
+        .suggestion-obs {
+            font-size: 13px;
+            color: var(--text-main);
+            line-height: 1.45;
+        }
+
+        .suggestion-tip {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.45;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 2px solid var(--primary);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                width: 95%;
+                margin: 20px auto;
+            }
+            .dashboard-card,
+            .results-board-wrapper {
+                padding: 18px;
+            }
+            .metrics-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="logo">
+            <span>LONG JUMP</span>
+            <strong>AI</strong>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="prediction.html">Prediction</a>
+            <a href="video-analysis.html" class="active">Video Analysis</a>
+            <a href="results.html">Results</a>
+        </nav>
+        <a href="results.html" class="nav-button">
+            Results Dashboard →
+        </a>
+    </header>
+
+    <!-- Main Container -->
+    <div class="dashboard-container">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>AI Video Analysis <span>Dashboard</span></h1>
+            <p>Upload long jump video footage to extract computer vision biomechanics, frame timing, trajectory metrics, and AI recommendations.</p>
+        </div>
+
+        <!-- Error Notification -->
+        <div id="errorMessage" class="error-alert hidden"></div>
+
+        <!-- Step 1: Video Upload Card -->
+        <div class="dashboard-card">
+            <div class="card-title">
+                <span>Upload Video Footage</span>
+                <span class="badge">Computer Vision AI</span>
+            </div>
+
+            <div class="upload-area">
+                <input type="file" id="videoInput" accept="video/*">
+                <button id="chooseVideoBtn" type="button" class="btn-choose">
+                    📁 Select Long Jump Video
+                </button>
+
+                <div id="fileName" class="file-name-display">
+                    No video file selected (.mp4, .mov, .avi, .webm)
+                </div>
+
+                <button id="analyzeBtn" type="button" class="btn-analyze" disabled>
+                    ⚡ ANALYZE VIDEO & DISPLAY RESULTS BOARD
+                </button>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loading" class="loading-box hidden">
+                <div class="spinner"></div>
+                <h3 style="color: var(--primary); margin-bottom: 6px;">AI Computer Vision is Analyzing Video...</h3>
+                <p style="color: var(--text-muted); font-size: 14px;">Extracting pose keypoints, calculating joint angles, detecting jump phases, and generating overlay MP4 video. Please wait.</p>
+            </div>
+        </div>
+
+
+        <!-- ================================================================= -->
+        <!-- AI RESULTS DASHBOARD BOARD (ALWAYS VISIBLE MAIN RESULTS CONTAINER) -->
+        <!-- ================================================================= -->
+        <div id="resultsBoardContainer" class="results-board-wrapper">
+
+            <div class="results-board-header">
+                <div>
+                    <h2>📊 AI Video Analysis Results Board</h2>
+                    <p>Computer vision breakdown of joint angles, phase timing, landing stability, trajectory, and overlay video.</p>
+                </div>
+                <div id="boardStatusBadge" class="status-indicator">
+                    <span>● Ready for Upload</span>
+                </div>
+            </div>
+
+            <!-- AI Rendered Overlay Video -->
+            <div id="analyzedSection" class="dashboard-card">
+                <div class="card-title">
+                    <span>🎥 AI Rendered Pose Overlay Video</span>
+                    <span class="badge">H.264 MP4 Output</span>
+                </div>
+                <div id="analyzedVideoPlaceholder" class="video-placeholder">
+                    Upload a video above and click Analyze to view the rendered AI keypoint overlay video.
+                </div>
+                <video id="analyzedVideo" class="hidden" controls width="100%" preload="metadata" playsinline></video>
+            </div>
+
+            <!-- Original Uploaded Video -->
+            <div id="originalSection" class="dashboard-card">
+                <div class="card-title">
+                    <span>Original Uploaded Video</span>
+                    <span class="badge">Input Footage</span>
+                </div>
+                <div id="originalVideoPlaceholder" class="video-placeholder">
+                    Selected original video preview will appear here.
+                </div>
+                <video id="originalVideo" class="hidden" controls width="100%" preload="metadata" playsinline></video>
+            </div>
+
+            <!-- AI Distance Forecast & Talent Identification (ALWAYS DISPLAYED ONCE ANALYZED) -->
+            <div id="predictionSection" class="dashboard-card" style="border: 2px solid rgba(56, 232, 165, 0.4); background: linear-gradient(135deg, rgba(56, 232, 165, 0.06) 0%, rgba(14, 29, 49, 0.95) 100%);">
+                <div class="card-title">
+                    <span>⚡ AI Jump Distance Forecast & Talent Tier</span>
+                    <span class="badge" style="background: var(--primary); color: #07111f; font-weight: bold;">Machine Learning Output</span>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; margin-bottom: 24px; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 14px; border: 1px solid var(--border-color);">
+                    <div>
+                        <div style="font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Forecasted Distance</div>
+                        <div id="predictedDistance" style="font-size: 38px; font-weight: 800; color: var(--primary); line-height: 1.1;">-- <small style="font-size: 20px;">m</small></div>
+                    </div>
+                    <div>
+                        <div style="font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Talent Identification Tier</div>
+                        <span id="performanceLabel" style="display: inline-block; padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: bold; text-transform: uppercase; background: rgba(56,232,165,0.15); color: #38e8a5; border: 1px solid rgba(56,232,165,0.3);">--</span>
+                    </div>
+                    <div>
+                        <div style="font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Model Confidence</div>
+                        <div id="predictionConfidence" style="font-size: 22px; font-weight: bold; color: #fff;">--%</div>
+                    </div>
+                </div>
+
+                <!-- Probabilities Bars -->
+                <div id="probabilities" style="margin-bottom: 20px;"></div>
+
+                <!-- Suggestions / Feedback -->
+                <h3 style="font-size: 16px; color: #fff; margin-bottom: 12px;">💡 AI Biomechanical Coaching Suggestions</h3>
+                <div id="suggestionsList" class="suggestions-grid">
+                    <p style="color: var(--text-muted); font-size: 13px;">Upload and analyze a video above to receive customized biomechanical feedback.</p>
+                </div>
+
+                <!-- Strategic Roadmap -->
+                <div id="roadmapContainer" class="hidden" style="margin-top: 18px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid var(--border-color);">
+                    <h4 style="color: var(--primary); margin: 0 0 10px 0; font-size: 14px;">🚀 Strategic Coaching Roadmap</h4>
+                    <ul id="roadmapList" style="padding-left: 20px; margin: 0; color: var(--text-main); font-size: 13px; line-height: 1.6;"></ul>
+                </div>
+
+                <!-- Quick Navigation to Dashboards -->
+                <div style="display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap;">
+                    <a href="results.html" class="nav-button" style="text-decoration: none; flex: 1; min-width: 180px; text-align: center;">
+                        📊 Results Dashboard →
+                    </a>
+                    <a href="athlete-dashboard.html" class="nav-button" style="text-decoration: none; flex: 1; min-width: 180px; text-align: center; background: rgba(255,255,255,0.08); color: #fff; border: 1px solid var(--border-color);">
+                        🏃 Athlete Dashboard →
+                    </a>
+                    <a href="feedback.html" class="nav-button" style="text-decoration: none; flex: 1; min-width: 180px; text-align: center; background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3);">
+                        💬 Coaching Feedback →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Biomechanical Parameters & Joint Angles -->
+            <div id="performanceSection" class="dashboard-card">
+                <div class="card-title">
+                    <span>📐 Biomechanical Parameters & Joint Angles</span>
+                    <span class="badge">Angles & Dynamics</span>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-box highlighted">
+                        <div class="metric-label">Takeoff Angle</div>
+                        <div id="detectedTakeoffAngle" class="metric-value">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Takeoff Knee Angle</div>
+                        <div id="kneeAngle" class="metric-value text-white">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Takeoff Hip Angle</div>
+                        <div id="hipAngle" class="metric-value text-white">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Takeoff Ankle Angle</div>
+                        <div id="ankleAngle" class="metric-value text-white">--</div>
+                    </div>
+                    <div class="metric-box highlighted">
+                        <div class="metric-label">Landing Stability Score</div>
+                        <div id="landingStability" class="metric-value">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Flight Duration</div>
+                        <div id="flightTime" class="metric-value text-white">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Run-up Duration</div>
+                        <div id="runupTime" class="metric-value text-white">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Vertical Movement</div>
+                        <div id="takeoffVerticalMovement" class="metric-value text-white">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jump Phase Kinematics -->
+            <div id="phaseSection" class="dashboard-card">
+                <div class="card-title">
+                    <span>⏱️ Jump Phase & Frame Kinematics</span>
+                    <span class="badge">Time & Frames</span>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <div class="metric-label">Takeoff Time</div>
+                        <div id="takeoffTime" class="metric-value">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Takeoff Frame</div>
+                        <div id="takeoffFrame" class="metric-value text-white">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Apex / Peak Time</div>
+                        <div id="peakTime" class="metric-value">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Apex / Peak Frame</div>
+                        <div id="peakFrame" class="metric-value text-white">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Landing Time</div>
+                        <div id="landingTime" class="metric-value">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Landing Frame</div>
+                        <div id="landingFrame" class="metric-value text-white">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Landing Detected</div>
+                        <div id="landingDetected" class="metric-value text-white">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Distance & Quality -->
+            <div id="distanceSection" class="dashboard-card">
+                <div class="card-title">
+                    <span>📏 Distance Measurement & Quality</span>
+                    <span class="badge">Calibration</span>
+                </div>
+                <div class="metrics-grid" style="margin-bottom: 16px;">
+                    <div class="metric-box">
+                        <div class="metric-label">Distance Status</div>
+                        <div id="distanceAvailable" class="metric-value text-white">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Measured Horizontal Distance</div>
+                        <div id="distanceValue" class="metric-value">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Analysis Quality Score</div>
+                        <div id="analysisQuality" class="metric-value">--</div>
+                    </div>
+                </div>
+                <p id="distanceReason" style="color: var(--text-muted); font-size: 14px; background: rgba(255,255,255,0.03); padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border-color);">
+                    Upload a video to evaluate camera view angle and distance availability.
+                </p>
+            </div>
+
+            <!-- Video Information & Pose Detection -->
+            <div id="videoInfoSection" class="dashboard-card">
+                <div class="card-title">
+                    <span>📹 Video Specifications & Landmark Detection</span>
+                    <span class="badge">MediaPipe Data</span>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <div class="metric-label">Resolution</div>
+                        <div id="videoResolution" class="metric-value text-white">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Frame Rate</div>
+                        <div id="videoFPS" class="metric-value">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Total Video Frames</div>
+                        <div id="totalFrames" class="metric-value text-white">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Duration</div>
+                        <div id="videoDuration" class="metric-value">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Camera Angle</div>
+                        <div id="cameraView" class="metric-value text-white">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Detected Frames</div>
+                        <div id="detectedFrames" class="metric-value text-white">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Detection Ratio</div>
+                        <div id="detectionRatio" class="metric-value">--</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Pose Confidence</div>
+                        <div id="poseConfidence" class="metric-value">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI System Notes -->
+            <div id="notesSection" class="dashboard-card">
+                <div class="card-title">
+                    <span>🤖 AI System Notes & Technical Observations</span>
+                    <span class="badge">Report</span>
+                </div>
+                <ul id="analysisNotes" class="notes-list">
+                    <li>Upload a long jump video and click "Analyze Video" to generate live AI technical observations.</li>
+                </ul>
+            </div>
+
+        </div>
+
+
+        <!-- Cross-Navigation: Separate Prediction Page & Results Dashboard -->
+        <div class="dashboard-card" style="text-align: center; padding: 36px 24px; background: linear-gradient(135deg, rgba(14, 29, 49, 0.95), rgba(7, 17, 31, 0.95)); border: 1px solid rgba(56, 232, 165, 0.3);">
+            <div style="font-size: 38px; margin-bottom: 12px;">⚡</div>
+            <h2 style="font-size: 22px; margin-bottom: 8px; color: var(--text-main);">Want to Simulate Custom Parameters Manually?</h2>
+            <p style="color: var(--text-muted); max-width: 620px; margin: 0 auto 24px auto; font-size: 14px; line-height: 1.6;">
+                Use our dedicated <strong>AI Prediction Engine</strong> to enter athlete biometrics, takeoff angles, and sprint velocities manually. The system will predict jump distance and provide personalized technical suggestions.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+                <a href="prediction.html" class="btn-choose" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px;">
+                    ⚡ Open AI Prediction Page →
+                </a>
+                <a href="results.html" class="btn-choose" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: rgba(56, 232, 165, 0.15); border: 1px solid var(--primary); color: var(--primary);">
+                    📊 View Results Dashboard →
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">
+            LONG JUMP <strong>AI</strong>
+        </div>
+        <p>AI-powered long jump talent identification and computer vision performance analysis.</p>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="prediction.html">Prediction</a>
+            <a href="video-analysis.html">Video Analysis</a>
+            <a href="results.html">Results</a>
+        </div>
+        <p class="copyright">© 2026 Long Jump AI. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/video-analysis.js"></script>
+
+</body>
+</html>

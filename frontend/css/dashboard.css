@@ -1,0 +1,626 @@
+/* ========================================
+   DASHBOARD
+======================================== */
+
+.dashboard-container {
+    padding: 60px 7% 100px;
+}
+
+
+/* Header */
+
+.dashboard-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: end;
+
+    margin-bottom: 45px;
+}
+
+.dashboard-header h1 {
+    font-size: 42px;
+
+    margin-bottom: 10px;
+}
+
+.dashboard-header > div > p:last-child {
+    color: var(--text-light);
+
+    font-size: 14px;
+}
+
+
+/* Statistics */
+
+.dashboard-stats {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 25px;
+}
+
+.dashboard-stat-card {
+    padding: 25px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+}
+
+.stat-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    color: var(--text-light);
+
+    font-size: 13px;
+}
+
+.stat-icon {
+    font-size: 17px;
+
+    color: var(--primary);
+}
+
+.dashboard-stat-card h2 {
+    font-size: 34px;
+
+    margin: 18px 0 5px;
+}
+
+.dashboard-stat-card h2 small {
+    color: var(--primary);
+
+    font-size: 17px;
+}
+
+.dashboard-stat-card p {
+    color: var(--text-light);
+
+    font-size: 12px;
+}
+
+.dashboard-stat-card .positive {
+    color: var(--primary);
+}
+
+
+/* Main Grid */
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns: 2fr 1fr;
+
+    gap: 18px;
+
+    margin-bottom: 18px;
+}
+
+.dashboard-card {
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    padding: 28px;
+}
+
+
+/* Card Title */
+
+.card-title {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 30px;
+}
+
+.card-title h3 {
+    font-size: 18px;
+}
+
+.card-title p {
+    color: var(--text-light);
+
+    font-size: 12px;
+
+    margin-top: 4px;
+}
+
+.card-title select {
+    background: var(--background-light);
+
+    color: var(--text);
+
+    border: 1px solid var(--border);
+
+    padding: 8px 12px;
+
+    border-radius: 5px;
+}
+
+
+/* Chart */
+
+.chart {
+    display: flex;
+
+    height: 290px;
+}
+
+.y-axis {
+    width: 40px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    padding-bottom: 30px;
+
+    color: var(--text-light);
+
+    font-size: 10px;
+}
+
+.chart-area {
+    flex: 1;
+
+    position: relative;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.grid-line {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    height: 1px;
+
+    background: var(--border);
+}
+
+.line-1 {
+    top: 0;
+}
+
+.line-2 {
+    top: 25%;
+}
+
+.line-3 {
+    top: 50%;
+}
+
+.line-4 {
+    top: 75%;
+}
+
+.line-5 {
+    bottom: 0;
+}
+
+.chart-bars {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    justify-content: space-around;
+
+    align-items: end;
+
+    padding: 0 25px;
+}
+
+.bar-container {
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: end;
+
+    align-items: center;
+
+    gap: 8px;
+
+    width: 45px;
+}
+
+.bar {
+    width: 25px;
+
+    background: #23445a;
+
+    border-radius: 4px 4px 0 0;
+
+    transition: 0.3s;
+}
+
+.bar:hover,
+.active-bar {
+    background: var(--primary);
+}
+
+.bar-container span {
+    color: var(--text-light);
+
+    font-size: 10px;
+}
+
+
+/* Talent */
+
+.talent-chart {
+    display: flex;
+
+    justify-content: center;
+
+    padding: 15px 0 25px;
+}
+
+.donut {
+    width: 170px;
+    height: 170px;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            var(--primary) 0deg 72deg,
+            #e2a84a 72deg 255deg,
+            #34546a 255deg 360deg
+        );
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.donut::before {
+    content: "";
+
+    width: 115px;
+    height: 115px;
+
+    border-radius: 50%;
+
+    background: var(--card);
+
+    position: absolute;
+}
+
+.donut-center {
+    position: relative;
+
+    text-align: center;
+
+    z-index: 2;
+}
+
+.donut-center strong {
+    display: block;
+
+    font-size: 28px;
+}
+
+.donut-center span {
+    color: var(--text-light);
+
+    font-size: 11px;
+}
+
+.talent-legend {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.talent-legend div {
+    display: grid;
+
+    grid-template-columns: 12px 1fr auto;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 12px;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+}
+
+.legend-dot.high {
+    background: var(--primary);
+}
+
+.legend-dot.medium {
+    background: #e2a84a;
+}
+
+.legend-dot.developing {
+    background: #34546a;
+}
+
+
+/* Recent Athletes */
+
+.recent-athletes {
+    margin-bottom: 18px;
+}
+
+.card-title > a {
+    color: var(--primary);
+
+    text-decoration: none;
+
+    font-size: 12px;
+}
+
+.athlete-table {
+    width: 100%;
+}
+
+.table-header,
+.table-row {
+    display: grid;
+
+    grid-template-columns:
+        2fr
+        0.7fr
+        1fr
+        1fr
+        1fr;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.table-header {
+    color: var(--text-light);
+
+    font-size: 11px;
+
+    padding: 0 10px 15px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.table-row {
+    padding: 15px 10px;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.athlete-name {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    background: #18324a;
+
+    color: var(--primary);
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.high-text {
+    color: var(--primary);
+}
+
+.medium-text {
+    color: #e2a84a;
+}
+
+.developing-text {
+    color: #7891a2;
+}
+
+.badge {
+    width: fit-content;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+}
+
+.high-badge {
+    color: var(--primary);
+
+    background: rgba(56, 232, 165, 0.1);
+}
+
+.medium-badge {
+    color: #e2a84a;
+
+    background: rgba(226, 168, 74, 0.1);
+}
+
+.developing-badge {
+    color: #7891a2;
+
+    background: rgba(120, 145, 162, 0.1);
+}
+
+
+/* Quick Actions */
+
+.quick-actions {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.quick-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 22px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    color: var(--text);
+
+    transition: 0.3s;
+}
+
+.quick-card:hover {
+    border-color: var(--primary);
+
+    transform: translateY(-3px);
+}
+
+.quick-card > span:last-child {
+    margin-left: auto;
+
+    color: var(--primary);
+}
+
+.quick-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 8px;
+
+    background: rgba(56, 232, 165, 0.08);
+
+    color: var(--primary);
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+.quick-card h3 {
+    font-size: 14px;
+}
+
+.quick-card p {
+    color: var(--text-light);
+
+    font-size: 11px;
+
+    margin-top: 3px;
+}
+
+
+/* Responsive */
+
+@media (max-width: 1100px) {
+
+    .dashboard-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .dashboard-container {
+        padding: 40px 5%;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 32px;
+    }
+
+    .dashboard-stats,
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .table-header {
+        display: none;
+    }
+
+    .table-row {
+        grid-template-columns: 1fr 1fr;
+
+        padding: 18px 5px;
+    }
+
+    .table-row > span:nth-child(2) {
+        display: none;
+    }
+
+}

@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results Dashboard | Long Jump AI</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/auth.js"></script>
+
+    <style>
+        .results-container {
+            width: 92%;
+            max-width: 1300px;
+            margin: 40px auto 80px;
+        }
+
+        .results-hero {
+            background: linear-gradient(135deg, rgba(56, 232, 165, 0.08) 0%, rgba(14, 29, 49, 0.85) 100%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 35px 40px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .results-hero h1 {
+            font-size: 34px;
+            color: #fff;
+            margin: 8px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .results-hero h1 span {
+            color: var(--primary);
+        }
+
+        .results-hero p {
+            color: var(--text-light);
+            font-size: 15px;
+            max-width: 650px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 20px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .hero-btn-primary {
+            background: var(--primary);
+            color: #06121c !important;
+        }
+
+        .hero-btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .hero-btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff !important;
+            border: 1px solid var(--border);
+        }
+
+        .hero-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* KPI Cards Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .kpi-title {
+            font-size: 12px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .kpi-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .kpi-sub {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        /* Filter Toolbar */
+        .filter-toolbar {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 14px 10px 36px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.25s;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .filters-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-select {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: #fff;
+            font-size: 13.5px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .filter-select option {
+            background: #0e1d31;
+            color: #fff;
+        }
+
+        .clear-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .clear-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        /* Results Grid */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .result-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .result-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(56, 232, 165, 0.4);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .type-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .type-video {
+            background: rgba(56, 232, 165, 0.15);
+            color: var(--primary);
+            border: 1px solid rgba(56, 232, 165, 0.3);
+        }
+
+        .type-manual {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .result-date {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .result-title {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 14px;
+            word-break: break-word;
+            font-weight: 600;
+        }
+
+        .distance-banner {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .distance-label {
+            font-size: 12px;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .distance-num {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .talent-tag {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .talent-high { background: rgba(56, 232, 165, 0.15); color: #38e8a5; }
+        .talent-good { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+        .talent-dev { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+
+        .metrics-chips {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .metric-chip {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: var(--text-light);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .metric-chip strong {
+            color: #fff;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-card {
+            flex: 1;
+            min-width: 110px;
+            padding: 9px 12px;
+            border-radius: 8px;
+            font-size: 12.5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .btn-play-video {
+            background: rgba(56, 232, 165, 0.15);
+            color: var(--primary);
+            border: 1px solid rgba(56, 232, 165, 0.3);
+        }
+
+        .btn-play-video:hover {
+            background: var(--primary);
+            color: #06121c;
+        }
+
+        .btn-details {
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            border: 1px solid var(--border);
+        }
+
+        .btn-details:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--primary);
+        }
+
+        .btn-delete {
+            background: transparent;
+            color: #94a3b8;
+            border: 1px solid var(--border);
+            padding: 9px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        /* Empty State */
+        .empty-state {
+            background: var(--card);
+            border: 1px dashed var(--border);
+            border-radius: 16px;
+            padding: 60px 20px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.7;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: var(--text-light);
+            font-size: 14px;
+            max-width: 480px;
+            margin: 0 auto 20px;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.82);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background: #0e1d31;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            width: 95%;
+            max-width: 850px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .modal-close-btn:hover {
+            background: rgba(239, 68, 68, 0.25);
+            color: #ef4444;
+        }
+
+        .modal-header h2 {
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .modal-header p {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .video-player-container {
+            width: 100%;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .video-player-container video {
+            width: 100%;
+            max-height: 480px;
+            display: block;
+        }
+
+        /* Biomechanics Table in Modal */
+        .modal-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+            margin-bottom: 20px;
+        }
+
+        .modal-table th {
+            text-align: left;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-light);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .modal-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        /* Coaching Suggestions in Modal */
+        .modal-sug-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+        }
+
+        .modal-sug-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .modal-sug-header strong {
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .modal-sug-body {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .modal-sug-tip {
+            margin-top: 8px;
+            font-size: 12.5px;
+            color: var(--primary);
+            background: rgba(56, 232, 165, 0.08);
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Unified Navigation Bar -->
+    <header class="navbar">
+        <div class="logo">
+            <span>LONG JUMP</span>
+            <strong>AI</strong>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="prediction.html">Prediction</a>
+            <a href="video-analysis.html">Video Analysis</a>
+            <a href="results.html" class="active">Results</a>
+        </nav>
+
+        <a href="prediction.html" class="nav-button">
+            New Prediction
+        </a>
+    </header>
+
+    <!-- Main Results Dashboard Container -->
+    <main class="results-container">
+
+        <!-- Page Header & Quick Launch -->
+        <section class="results-hero">
+            <div>
+                <p class="tag">PERFORMANCE INTELLIGENCE & EVALUATION ARCHIVE</p>
+                <h1>Results <span>Dashboard</span></h1>
+                <p>
+                    Review all recorded automated video analyses and manual jump predictions. Replay AI skeletal overlays, examine joint kinematics, and inspect customized biomechanical coaching suggestions.
+                </p>
+            </div>
+
+            <div class="hero-actions">
+                <a href="prediction.html" class="hero-btn hero-btn-primary">
+                    <span>⚡</span> Manual Prediction
+                </a>
+                <a href="video-analysis.html" class="hero-btn hero-btn-secondary">
+                    <span>📹</span> Video Analysis
+                </a>
+            </div>
+        </section>
+
+        <!-- KPI Metric Summary -->
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-title">
+                    <span>Total Assessments</span>
+                    <span>📊</span>
+                </div>
+                <div class="kpi-value" id="kpiTotal">0</div>
+                <div class="kpi-sub">Video analyses & manual predictions</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-title">
+                    <span>Best Recorded Distance</span>
+                    <span>🏆</span>
+                </div>
+                <div class="kpi-value" id="kpiBest" style="color: var(--primary);">-- m</div>
+                <div class="kpi-sub">Highest forecasted jump</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-title">
+                    <span>Avg Takeoff Angle</span>
+                    <span>📐</span>
+                </div>
+                <div class="kpi-value" id="kpiAvgAngle">--°</div>
+                <div class="kpi-sub">Optimal corridor: 18° – 23°</div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-title">
+                    <span>High Potential Rate</span>
+                    <span>★</span>
+                </div>
+                <div class="kpi-value" id="kpiPotential">0%</div>
+                <div class="kpi-sub" id="kpiPotentialSub">0 of 0 athletes</div>
+            </div>
+        </section>
+
+        <!-- Filter & Search Toolbar -->
+        <section class="filter-toolbar">
+            <div class="search-wrap">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by athlete name, video name, or ID...">
+            </div>
+
+            <div class="filters-group">
+                <select id="typeFilter" class="filter-select">
+                    <option value="all">All Types</option>
+                    <option value="video">📹 Video Analysis Only</option>
+                    <option value="manual">⚡ Manual Prediction Only</option>
+                </select>
+
+                <select id="tierFilter" class="filter-select">
+                    <option value="all">All Talent Tiers</option>
+                    <option value="high">High Potential / Elite</option>
+                    <option value="good">Good / Competitive</option>
+                    <option value="dev">Developing</option>
+                </select>
+
+                <select id="sortFilter" class="filter-select">
+                    <option value="newest">Newest First</option>
+                    <option value="distance_desc">Distance (High to Low)</option>
+                    <option value="distance_asc">Distance (Low to High)</option>
+                    <option value="oldest">Oldest First</option>
+                </select>
+
+                <button id="refreshBtn" class="hero-btn hero-btn-secondary" title="Refresh from server" style="padding: 10px 14px;">
+                    🔄 Refresh
+                </button>
+
+                <button id="clearAllBtn" class="clear-btn" title="Clear assessment history">
+                    🗑 Clear All
+                </button>
+            </div>
+        </section>
+
+        <!-- Results Grid Container -->
+        <div id="resultsGrid" class="results-grid">
+            <!-- Populated via results.js -->
+        </div>
+
+        <!-- Empty State (Shown when no items match) -->
+        <div id="emptyState" class="empty-state hidden">
+            <div class="empty-icon">📭</div>
+            <h3>No Assessment Records Found</h3>
+            <p>Upload a jump video for automated pose tracking or enter manual biometrics to generate your first AI prediction.</p>
+            <div style="display: flex; gap: 12px; justify-content: center; margin-top: 15px;">
+                <a href="prediction.html" class="hero-btn hero-btn-primary">
+                    ⚡ Start Manual Prediction
+                </a>
+                <a href="video-analysis.html" class="hero-btn hero-btn-secondary">
+                    📹 Upload Jump Video
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal 1: AI Video Overlay Playback Modal -->
+    <div id="videoModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="modal-close-btn" id="closeVideoModal">&times;</button>
+            <div class="modal-header">
+                <h2 id="videoModalTitle">Analyzed AI Video Overlay</h2>
+                <p id="videoModalSub">Pose estimation & skeletal tracking overlay</p>
+            </div>
+
+            <div class="video-player-container">
+                <video id="modalVideoPlayer" controls playsinline></video>
+            </div>
+
+            <div id="videoModalDetails" style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
+                <!-- Populated dynamically -->
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 12px;">
+                <a id="modalDownloadVideoBtn" href="#" download class="hero-btn hero-btn-secondary" target="_blank">
+                    ⬇ Download Video
+                </a>
+                <button class="hero-btn hero-btn-primary" id="closeVideoModalAction">
+                    Close Player
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Biomechanical Kinematics & Suggestions Modal -->
+    <div id="detailsModal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="modal-close-btn" id="closeDetailsModal">&times;</button>
+            <div class="modal-header">
+                <h2 id="detailsModalTitle">Biomechanical Assessment Breakdown</h2>
+                <p id="detailsModalSub">Comprehensive kinematic evaluation & tailored coaching cues</p>
+            </div>
+
+            <!-- Joint Kinematics Table -->
+            <h3 style="font-size: 16px; color: #fff; margin-bottom: 12px;">Kinematic Parameters</h3>
+            <table class="modal-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Measured Value</th>
+                        <th>Target Standard</th>
+                        <th>Biomechanical Significance</th>
+                    </tr>
+                </thead>
+                <tbody id="modalKinematicsBody">
+                    <!-- Populated dynamically -->
+                </tbody>
+            </table>
+
+            <!-- Suggestions Section -->
+            <h3 style="font-size: 16px; color: #fff; margin: 24px 0 12px;">Targeted Coaching Recommendations</h3>
+            <div id="modalSuggestionsContainer">
+                <!-- Populated dynamically -->
+            </div>
+
+            <!-- Strategic Roadmap Section -->
+            <div id="modalRoadmapContainer" style="margin-top: 20px; display: none;">
+                <h3 style="font-size: 16px; color: #fff; margin-bottom: 10px;">Strategic Training Roadmap</h3>
+                <ul id="modalRoadmapList" style="padding-left: 20px; color: var(--text-light); font-size: 13.5px; line-height: 1.6;">
+                </ul>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; margin-top: 25px;">
+                <button class="hero-btn hero-btn-primary" id="closeDetailsModalAction">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer" style="text-align: center; padding: 40px; border-top: 1px solid var(--border); color: var(--text-light); font-size: 13px;">
+        <p>© 2026 Long Jump AI Sports Talent Identification Platform. Results and biomechanics analysis engine.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/results.js"></script>
+
+</body>
+
+</html>

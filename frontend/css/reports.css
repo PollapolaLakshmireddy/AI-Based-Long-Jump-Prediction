@@ -1,0 +1,612 @@
+/* ========================================
+   REPORTS PAGE
+======================================== */
+
+.reports-page {
+    padding: 60px 7% 100px;
+}
+
+
+/* Header */
+
+.reports-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: end;
+
+    margin-bottom: 40px;
+}
+
+.reports-header h1 {
+    font-size: 42px;
+
+    margin-bottom: 10px;
+}
+
+.reports-header p:last-child {
+    color: var(--text-light);
+
+    font-size: 14px;
+}
+
+.reports-header button {
+    border: none;
+
+    cursor: pointer;
+}
+
+
+/* Summary */
+
+.report-summary {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+.report-summary-card {
+    padding: 22px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+}
+
+.report-summary-card span {
+    display: block;
+
+    color: var(--text-light);
+
+    font-size: 10px;
+
+    margin-bottom: 9px;
+}
+
+.report-summary-card strong {
+    font-size: 25px;
+}
+
+
+/* Reports Card */
+
+.reports-card {
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    overflow: hidden;
+}
+
+
+/* Toolbar */
+
+.reports-toolbar {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 20px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.report-search {
+    position: relative;
+
+    flex: 1;
+
+    max-width: 450px;
+}
+
+.report-search span {
+    position: absolute;
+
+    left: 13px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 11px;
+}
+
+.report-search input {
+    width: 100%;
+
+    height: 42px;
+
+    padding: 0 12px 0 36px;
+
+    background: var(--background-light);
+
+    color: var(--text);
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
+
+    outline: none;
+}
+
+.report-search input:focus {
+    border-color: var(--primary);
+}
+
+.reports-toolbar select {
+    height: 42px;
+
+    padding: 0 12px;
+
+    background: var(--background-light);
+
+    color: var(--text);
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+
+/* Report Row */
+
+.report-row {
+    display: grid;
+
+    grid-template-columns:
+        45px
+        2fr
+        1fr
+        1fr
+        80px;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 20px 25px;
+
+    border-bottom: 1px solid var(--border);
+
+    transition: 0.2s;
+}
+
+.report-row:hover {
+    background: rgba(255,255,255,0.02);
+}
+
+.report-icon {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    color: var(--primary);
+
+    background:
+        rgba(56,232,165,0.08);
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.video-icon {
+    color: #8bb9d8;
+
+    background:
+        rgba(139,185,216,0.08);
+}
+
+.report-main strong {
+    display: block;
+
+    font-size: 12px;
+}
+
+.report-main span {
+    display: block;
+
+    color: var(--text-light);
+
+    font-size: 10px;
+
+    margin-top: 4px;
+}
+
+
+/* Report Type */
+
+.report-type {
+    width: fit-content;
+
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    font-size: 9px;
+}
+
+.prediction-type {
+    color: var(--primary);
+
+    background:
+        rgba(56,232,165,0.08);
+}
+
+.video-type {
+    color: #8bb9d8;
+
+    background:
+        rgba(139,185,216,0.08);
+}
+
+.performance-type {
+    color: #e2a84a;
+
+    background:
+        rgba(226,168,74,0.08);
+}
+
+
+/* Date */
+
+.report-date {
+    color: var(--text-light);
+
+    font-size: 10px;
+}
+
+
+/* Action */
+
+.report-action {
+    padding: 7px 10px;
+
+    background: transparent;
+
+    color: var(--text-light);
+
+    border: 1px solid var(--border);
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-size: 10px;
+}
+
+.report-action:hover {
+    color: var(--primary);
+
+    border-color: var(--primary);
+}
+
+
+/* Empty */
+
+.report-empty {
+    display: none;
+
+    text-align: center;
+
+    padding: 70px 20px;
+}
+
+.report-empty > div {
+    font-size: 30px;
+}
+
+.report-empty h3 {
+    margin-top: 10px;
+
+    font-size: 16px;
+}
+
+.report-empty p {
+    color: var(--text-light);
+
+    font-size: 11px;
+
+    margin-top: 5px;
+}
+
+
+/* ========================================
+   PREVIEW
+======================================== */
+
+.report-preview {
+    display: none;
+
+    margin-top: 20px;
+
+    padding: 30px;
+
+    background: var(--card);
+
+    border: 1px solid
+        rgba(56,232,165,0.18);
+
+    border-radius: 12px;
+}
+
+.report-preview.show {
+    display: block;
+}
+
+.preview-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: start;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid var(--border);
+
+    margin-bottom: 25px;
+}
+
+.preview-header h2 {
+    font-size: 23px;
+
+    margin-top: 5px;
+}
+
+.close-preview {
+    width: 32px;
+    height: 32px;
+
+    background: transparent;
+
+    color: var(--text-light);
+
+    border: 1px solid var(--border);
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-size: 18px;
+}
+
+.close-preview:hover {
+    color: #e25b5b;
+}
+
+
+/* Preview Athlete */
+
+.preview-athlete {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+.preview-avatar {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(56,232,165,0.08);
+
+    color: var(--primary);
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+.preview-athlete span {
+    color: var(--text-light);
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+}
+
+.preview-athlete h3 {
+    font-size: 17px;
+
+    margin-top: 3px;
+}
+
+
+/* Metrics */
+
+.preview-metrics {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+}
+
+.preview-metrics > div {
+    padding: 18px;
+
+    background: var(--background-light);
+
+    border: 1px solid var(--border);
+
+    border-radius: 7px;
+}
+
+.preview-metrics span {
+    display: block;
+
+    color: var(--text-light);
+
+    font-size: 9px;
+}
+
+.preview-metrics strong {
+    display: block;
+
+    font-size: 17px;
+
+    margin-top: 8px;
+}
+
+
+/* Recommendation */
+
+.preview-recommendation {
+    margin-top: 15px;
+
+    padding: 20px;
+
+    background:
+        rgba(56,232,165,0.03);
+
+    border: 1px solid
+        rgba(56,232,165,0.12);
+
+    border-radius: 7px;
+}
+
+.preview-recommendation p:last-child {
+    color: var(--text-light);
+
+    font-size: 11px;
+
+    line-height: 1.7;
+
+    margin-top: 8px;
+}
+
+
+/* Preview Actions */
+
+.preview-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 25px;
+}
+
+.preview-actions button {
+    border: none;
+
+    cursor: pointer;
+}
+
+
+/* Responsive */
+
+@media (max-width: 950px) {
+
+    .report-summary {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .report-row {
+        grid-template-columns:
+            45px
+            2fr
+            1fr
+            80px;
+    }
+
+    .report-type {
+        display: none;
+    }
+
+    .preview-metrics {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .reports-page {
+        padding: 40px 5% 70px;
+    }
+
+    .reports-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+    .reports-header h1 {
+        font-size: 32px;
+    }
+
+    .report-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .reports-toolbar {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .report-search {
+        max-width: none;
+    }
+
+    .report-row {
+        grid-template-columns:
+            40px
+            1fr
+            70px;
+    }
+
+    .report-date {
+        display: none;
+    }
+
+    .preview-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .preview-actions {
+        flex-direction: column;
+    }
+
+}

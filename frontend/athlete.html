@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Athlete Analysis | Long Jump AI</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/athlete.css">
+    <script src="js/auth.js"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- ================================
+     NAVBAR
+================================ -->
+
+<header class="navbar">
+
+    <div class="logo">
+
+        <span>LONG JUMP</span>
+        <strong>AI</strong>
+
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="athlete.html"
+           class="active">
+            Athlete
+        </a>
+
+        <a href="athletes.html">
+            Athletes
+        </a>
+
+        <a href="prediction.html">
+            Prediction
+        </a>
+
+        <a href="video-analysis.html">
+            Video Analysis
+        </a>
+
+    </nav>
+
+
+    <a href="dashboard.html"
+       class="nav-button">
+
+        Dashboard
+
+    </a>
+
+</header>
+
+
+
+<!-- ================================
+     MAIN
+================================ -->
+
+<main class="athlete-page">
+
+
+    <!-- Page Header -->
+
+    <section class="athlete-header">
+
+        <div>
+
+            <p class="tag">
+                ATHLETE ANALYSIS
+            </p>
+
+            <h1>
+                Athlete Profile
+            </h1>
+
+            <p>
+                Enter the athlete's physical and
+                performance information to analyze
+                long jump potential.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================
+         FORM
+    ================================= -->
+
+    <section class="athlete-layout">
+
+
+        <!-- LEFT SIDE -->
+
+        <div class="athlete-form-card">
+
+            <div class="form-title">
+
+                <div>
+
+                    <h2>
+                        Athlete Information
+                    </h2>
+
+                    <p>
+                        Enter accurate information
+                        for better predictions.
+                    </p>
+
+                </div>
+
+                <span class="required">
+                    * Required
+                </span>
+
+            </div>
+
+
+
+            <form id="athleteForm">
+
+
+                <!-- ================================
+                     PERSONAL INFORMATION
+                ================================= -->
+
+                <div class="form-section">
+
+                    <h3>
+                        Personal Information
+                    </h3>
+
+
+                    <div class="form-grid">
+
+
+                        <!-- Name -->
+
+                        <div class="form-group full">
+
+                            <label for="name">
+                                Athlete Name
+                                <span>*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                placeholder="Enter athlete name"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- Age -->
+
+                        <div class="form-group">
+
+                            <label for="age">
+                                Age
+                                <span>*</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="age"
+                                name="age"
+                                placeholder="e.g. 21"
+                                min="10"
+                                max="50"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- Gender -->
+
+                        <div class="form-group">
+
+                            <label for="gender">
+                                Gender
+                                <span>*</span>
+                            </label>
+
+                            <select
+                                id="gender"
+                                name="gender"
+                                required
+                            >
+
+                                <option value="">
+                                    Select gender
+                                </option>
+
+                                <option value="male">
+                                    Male
+                                </option>
+
+                                <option value="female">
+                                    Female
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- Height -->
+
+                        <div class="form-group">
+
+                            <label for="height">
+                                Height (cm)
+                                <span>*</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="height"
+                                name="height"
+                                placeholder="e.g. 178"
+                                min="100"
+                                max="250"
+                                step="0.1"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- Weight -->
+
+                        <div class="form-group">
+
+                            <label for="weight">
+                                Weight (kg)
+                                <span>*</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="weight"
+                                name="weight"
+                                placeholder="e.g. 68"
+                                min="30"
+                                max="200"
+                                step="0.1"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================================
+                     SPEED & POWER
+                ================================= -->
+
+                <div class="form-section">
+
+                    <h3>
+                        Speed & Power
+                    </h3>
+
+
+                    <div class="form-grid">
+
+
+                        <!-- Sprint Speed -->
+
+                        <div class="form-group">
+
+                            <label for="sprintSpeed">
+
+                                30m Sprint Speed
+
+                                <span>*</span>
+
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="number"
+                                    id="sprintSpeed"
+                                    name="sprintSpeed"
+                                    placeholder="e.g. 9.8"
+                                    min="1"
+                                    max="15"
+                                    step="0.01"
+                                    required
+                                >
+
+                                <span>
+                                    m/s
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Vertical Jump -->
+
+                        <div class="form-group">
+
+                            <label for="verticalJump">
+
+                                Vertical Jump
+
+                                <span>*</span>
+
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="number"
+                                    id="verticalJump"
+                                    name="verticalJump"
+                                    placeholder="e.g. 65"
+                                    min="10"
+                                    max="150"
+                                    step="0.1"
+                                    required
+                                >
+
+                                <span>
+                                    cm
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Standing Long Jump -->
+
+                        <div class="form-group">
+
+                            <label for="standingJump">
+
+                                Standing Long Jump
+
+                                <span>*</span>
+
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="number"
+                                    id="standingJump"
+                                    name="standingJump"
+                                    placeholder="e.g. 2.65"
+                                    min="0.5"
+                                    max="5"
+                                    step="0.01"
+                                    required
+                                >
+
+                                <span>
+                                    m
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Run Up Speed -->
+
+                        <div class="form-group">
+
+                            <label for="runUpSpeed">
+
+                                Run-up Speed
+
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="number"
+                                    id="runUpSpeed"
+                                    name="runUpSpeed"
+                                    placeholder="e.g. 9.5"
+                                    min="1"
+                                    max="15"
+                                    step="0.01"
+                                >
+
+                                <span>
+                                    m/s
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================================
+                     TAKE-OFF
+                ================================= -->
+
+                <div class="form-section">
+
+                    <h3>
+                        Take-off & Technique
+                    </h3>
+
+
+                    <div class="form-grid">
+
+
+                        <!-- Takeoff Speed -->
+
+                        <div class="form-group">
+
+                            <label for="takeoffSpeed">
+
+                                Take-off Speed
+
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="number"
+                                    id="takeoffSpeed"
+                                    name="takeoffSpeed"
+                                    placeholder="e.g. 8.7"
+                                    min="1"
+                                    max="15"
+                                    step="0.01"
+                                >
+
+                                <span>
+                                    m/s
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Takeoff Angle -->
+
+                        <div class="form-group">
+
+                            <label for="takeoffAngle">
+
+                                Take-off Angle
+
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="number"
+                                    id="takeoffAngle"
+                                    name="takeoffAngle"
+                                    placeholder="e.g. 20"
+                                    min="5"
+                                    max="45"
+                                    step="0.1"
+                                >
+
+                                <span>
+                                    °
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Leg Length -->
+
+                        <div class="form-group">
+
+                            <label for="legLength">
+
+                                Leg Length
+
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="number"
+                                    id="legLength"
+                                    name="legLength"
+                                    placeholder="e.g. 92"
+                                    min="40"
+                                    max="150"
+                                    step="0.1"
+                                >
+
+                                <span>
+                                    cm
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Previous Jump -->
+
+                        <div class="form-group">
+
+                            <label for="previousJump">
+
+                                Previous Best Jump
+
+                            </label>
+
+                            <div class="input-unit">
+
+                                <input
+                                    type="number"
+                                    id="previousJump"
+                                    name="previousJump"
+                                    placeholder="e.g. 6.85"
+                                    min="0"
+                                    max="10"
+                                    step="0.01"
+                                >
+
+                                <span>
+                                    m
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================================
+                     BUTTONS
+                ================================= -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="reset"
+                        class="reset-button"
+                    >
+
+                        Clear
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+
+                        Analyze Athlete
+
+                        <span>
+                            →
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+
+
+        <!-- ================================
+             RIGHT SIDE
+        ================================= -->
+
+        <aside class="analysis-info">
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    AI
+                </div>
+
+                <h3>
+                    AI Analysis
+                </h3>
+
+                <p>
+                    Your athlete data will be
+                    analyzed using our machine
+                    learning model.
+                </p>
+
+            </div>
+
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    01
+                </div>
+
+                <h3>
+                    Physical Profile
+                </h3>
+
+                <p>
+                    Height, weight, age and
+                    body measurements help
+                    establish the athlete profile.
+                </p>
+
+            </div>
+
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    02
+                </div>
+
+                <h3>
+                    Performance
+                </h3>
+
+                <p>
+                    Speed, jumping ability and
+                    take-off parameters help
+                    estimate performance.
+                </p>
+
+            </div>
+
+
+
+            <div class="info-card tip-card">
+
+                <span>
+                    💡
+                </span>
+
+                <div>
+
+                    <h3>
+                        Better Data = Better Prediction
+                    </h3>
+
+                    <p>
+                        Make sure all measurements
+                        are recorded accurately.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ================================
+     SCRIPT
+================================ -->
+
+<script src="js/main.js"></script>
+<script src="js/athlete.js"></script>
+
+
+</body>
+
+</html>
